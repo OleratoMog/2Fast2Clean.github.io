@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Book a Slot — 2Fast 2Clean</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="assets/logo.svg" alt="2Fast 2Clean logo" width="32" height="32">
+      <span>2Fast 2Clean</span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="booking.html" class="active">Book</a>
+      <a href="admin.html">Admin</a>
+      <button id="themeToggle" class="btn small" aria-label="Toggle theme">🌗</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Book your wash</h1>
+    <p class="lead">Choose a service, pick a day &amp; time, add your details, and confirm. (Demo only: payment &amp; notifications are simulated.)</p>
+
+    <section class="card">
+      <h2>1) Choose a service</h2>
+      <div class="grid three small-gap" id="svcGrid">
+        <!-- Services injected by app.js -->
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2) Pick a day</h2>
+      <input id="dayInput" type="date" />
+    </section>
+
+    <section class="card">
+      <h2>3) Pick a time</h2>
+      <div id="slotsWrap" class="slots"></div>
+      <p id="noSlotsMsg" class="muted" hidden>No slots available for this day.</p>
+    </section>
+
+    <section class="card">
+      <h2>4) Your details</h2>
+      <div class="form-grid">
+        <div>
+          <label for="name">Full name</label>
+          <input id="name" type="text" placeholder="e.g., Thabo Mokoena" />
+        </div>
+        <div>
+          <label for="phone">Phone (+27…)</label>
+          <input id="phone" type="tel" placeholder="+27…" />
+        </div>
+        <div>
+          <label for="email">Email (optional)</label>
+          <input id="email" type="email" placeholder="you@example.com" />
+        </div>
+      </div>
+      <button id="confirmBtn" class="btn primary">Confirm &amp; Pay (mock)</button>
+      <p id="err" class="error" hidden></p>
+      <p id="ok" class="ok" hidden></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> 2Fast 2Clean • Johannesburg</p>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

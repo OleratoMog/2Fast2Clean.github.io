@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Admin — 2Fast 2Clean</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="assets/logo.svg" alt="2Fast 2Clean logo" width="32" height="32">
+      <span>2Fast 2Clean</span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="booking.html">Book</a>
+      <a href="admin.html" class="active">Admin</a>
+      <button id="themeToggle" class="btn small" aria-label="Toggle theme">🌗</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Admin Dashboard (Demo)</h1>
+    <p class="muted">Client-side only. Bookings are saved in your browser (localStorage).</p>
+
+    <section class="card">
+      <h2>Sign in</h2>
+      <div class="form-inline">
+        <input id="adminEmail" placeholder="admin@2fast.local" value="admin@2fast.local">
+        <input id="adminPass" type="password" placeholder="Password" value="admin123">
+        <button id="adminLogin" class="btn">Sign in</button>
+      </div>
+      <p id="adminErr" class="error" hidden></p>
+    </section>
+
+    <section id="dash" class="card" hidden>
+      <h2>Today’s Bookings</h2>
+      <div class="table-wrap">
+        <table class="table" id="bookingsTable">
+          <thead>
+            <tr>
+              <th>ID</th><th>Customer</th><th>Phone</th><th>Service</th><th>Day</th><th>Time</th><th>Status</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody><!-- rows injected by app.js --></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> 2Fast 2 Clean • Johannesburg</p>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
