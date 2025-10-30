@@ -4,11 +4,9 @@ export const handler = async (event) => {
     const payload = event.httpMethod === "POST" ? JSON.parse(event.body || "{}") : {};
     const apiKey = process.env.RESEND_API_KEY;
     const to = process.env.TO_EMAIL || "you@yourdomain.co.za";
-
     if (!apiKey) return { statusCode: 200, body: "No email provider configured." };
 
-    // Minimal Resend API call
-    const res = await fetch("https://api.resend.com/emails", {
+    await fetch("https://api.resend.com/emails", {
       method:"POST",
       headers: { "Authorization": `Bearer ${apiKey}`, "Content-Type":"application/json" },
       body: JSON.stringify({
@@ -18,9 +16,8 @@ export const handler = async (event) => {
       })
     });
 
-    if (!res.ok) throw new Error("Email send failed");
     return { statusCode: 200, body: "OK" };
-  } catch (e) {
-    return { statusCode: 200, body: "OK" }; // don't fail ITN
+  } catch {
+    return { statusCode: 200, body: "OK" };
   }
 };

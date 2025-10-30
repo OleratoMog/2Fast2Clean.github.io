@@ -1,16 +1,16 @@
-/* ========== Brand ========== */
+/* ===== Brand + Theme ===== */
 :root{
-  --bg:#0a0f1a;            /* deep navy */
+  --bg:#0a0f1a;
   --card:#0f1624;
   --text:#eaf0ff;
   --muted:#adbbd3;
   --border:#1b263b;
-  --brand:#0b3d91;         /* navy blue */
-  --brand-2:#2f6ad9;       /* electric blue */
+  --brand:#0b3d91;
+  --brand-2:#2f6ad9;
   --gold:#ffd84d;
   --ok:#10b981;
   --err:#ef4444;
-  --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --shadow: 0 14px 34px rgba(0,0,0,.35);
 }
 :root.light{
   --bg:#ffffff;
@@ -23,10 +23,10 @@
   --gold:#c28b00;
   --ok:#059669;
   --err:#dc2626;
-  --shadow: 0 10px 24px rgba(0,0,0,.08);
+  --shadow: 0 14px 28px rgba(0,0,0,.08);
 }
 
-/* ========== Base ========== */
+/* ===== Base ===== */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
@@ -40,7 +40,7 @@ a:hover{color:#ffe68b}
 img{max-width:100%; display:block}
 .container{max-width:1180px; margin:0 auto; padding:24px 20px}
 
-/* ========== Header / Nav ========== */
+/* ===== Header / Nav ===== */
 .site-header{
   position:sticky; top:0; z-index:30;
   display:flex; align-items:center; justify-content:space-between;
@@ -49,7 +49,7 @@ img{max-width:100%; display:block}
   backdrop-filter: blur(10px);
 }
 .site-header.glass{box-shadow: var(--shadow)}
-.brand{display:flex; gap:12px; align-items:center; color:var(--text); font-weight:700; letter-spacing:.2px}
+.brand{display:flex; gap:12px; align-items:center; color:var(--text); font-weight:800; letter-spacing:.2px}
 .brand span{font-size:18px}
 .nav{display:flex; gap:6px; align-items:center}
 .nav a{
@@ -73,30 +73,30 @@ img{max-width:100%; display:block}
 .btn:hover{transform: translateY(-1px); box-shadow: var(--shadow)}
 .btn.small{padding:6px 10px}
 .btn.primary{background:linear-gradient(90deg, var(--brand), var(--brand-2)); border-color:transparent; color:#fff}
-.btn.primary.big{padding:12px 18px; font-weight:600}
-.btn.ghost{background:transparent}
-.btn.gold{background:linear-gradient(90deg, #c28b00, #ffd84d); color:#1a1200; border-color:transparent; font-weight:600}
+.btn.primary.big{padding:12px 18px; font-weight:700}
+.btn.ghost{background:transparent; border-color:color-mix(in oklab, var(--gold) 40%, transparent)}
+.btn.gold{background:linear-gradient(90deg, #c28b00, #ffd84d); color:#1a1200; border-color:transparent; font-weight:700}
 
-/* ========== Hero ========== */
+/* ===== Hero ===== */
 .hero{position:relative; min-height:64vh; display:flex; align-items:center}
 .bg-cover{
-  background-image: url('https://images.unsplash.com/photo-1612519304391-5da3a2b66d1e?q=80&w=1600&auto=format&fit=crop'); /* car being washed */
+  background-image: url('https://images.unsplash.com/photo-1612519304391-5da3a2b66d1e?q=80&w=1600&auto=format&fit=crop');
   background-size: cover; background-position: center;
 }
 .hero .overlay{
-  position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,15,26,.70), rgba(10,15,26,.85));
+  position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,15,26,.72), rgba(10,15,26,.9));
 }
 .hero-inner{position:relative; display:flex; align-items:center; min-height:60vh}
 .hero-copy{max-width:680px}
-.hero-copy h1{font-size:48px; margin:.2em 0 0}
+.hero-copy h1{font-size:48px; margin:.2em 0 0; font-weight:800}
 .accent{color:var(--gold)}
-.lead{color:var(--muted); max-width:60ch}
+.lead{color:var(--muted); max-width:60ch; font-size:18px}
 .cta{display:flex; gap:12px; margin:18px 0}
 .badges{display:flex; gap:12px; padding:0; margin:12px 0; list-style:none; color:#e8ecff; flex-wrap:wrap}
 .badges li{background:rgba(255,255,255,.08); padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.14)}
 
-/* ========== Sections ========== */
-.section-title{font-size:28px; margin:0 0 10px}
+/* ===== Sections ===== */
+.section-title{font-size:28px; margin:0 0 10px; font-weight:800}
 .grid{display:grid; gap:16px}
 .grid.three{grid-template-columns: repeat(3, minmax(0,1fr))}
 .grid.small-gap{gap:10px}
@@ -110,7 +110,7 @@ img{max-width:100%; display:block}
 .muted{color:var(--muted)}
 .small{font-size:13px}
 
-/* Split block */
+/* Split */
 .split{display:grid; grid-template-columns: 1.1fr .9fr; gap:24px; align-items:center}
 .phone-shadow{box-shadow: var(--shadow); border-radius:20px}
 .phone-mock{width:200px; height:360px; background:#111; border-radius:28px; margin:20px auto; border:4px solid #333}
@@ -154,7 +154,7 @@ input:focus{border-color:var(--brand-2); box-shadow:0 0 0 3px color-mix(in oklab
 /* Footer */
 .site-footer{padding:18px; text-align:center; color:var(--muted); border-top:1px solid var(--border); margin-top:30px}
 
-/* ========== Responsive ========== */
+/* ===== Responsive ===== */
 @media (max-width: 1100px){
   .split{grid-template-columns:1fr}
 }

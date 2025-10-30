@@ -5,6 +5,7 @@
   <title>Book a Slot — 2Fast 2Clean</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
@@ -24,7 +25,7 @@
 
   <main class="container">
     <h1>Book your wash</h1>
-    <p class="lead">Choose a service, pick a date &amp; time, add your details, and confirm. You can run mock mode or switch to real PayFast in <code>assets/config.js</code>.</p>
+    <p class="lead">Choose a service, pick a date &amp; time, add your details, and pay securely via PayFast.</p>
 
     <section class="card lift">
       <h2>1) Choose a service</h2>
@@ -54,14 +55,13 @@
           <input id="phone" type="tel" placeholder="+27…" />
         </div>
         <div>
-          <label for="email">Email (optional)</label>
+          <label for="email">Email (for receipt)</label>
           <input id="email" type="email" placeholder="you@example.com" />
         </div>
       </div>
 
       <div class="pay-row">
-        <button id="confirmBtn" class="btn primary">Confirm &amp; Pay <span id="payModeTag"></span></button>
-        <span class="muted small">Current mode: <code id="modeText"></code></span>
+        <button id="confirmBtn" class="btn primary">Pay with PayFast</button>
       </div>
       <p id="err" class="error" hidden></p>
       <p id="ok" class="ok" hidden></p>

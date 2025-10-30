@@ -6,7 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Premium, mobile-first car wash bookings. Skip the queue, secure checkout, instant confirmations." />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
@@ -30,14 +33,14 @@
       <div class="container hero-inner">
         <div class="hero-copy">
           <h1>Premium car wash. <span class="accent">Zero queue.</span></h1>
-          <p class="lead">Mobile-first bookings, transparent pricing, instant confirmations. Arrive on time, leave with a showroom shine.</p>
+          <p class="lead">Mobile-first bookings, transparent pricing, and instant confirmations. Arrive on time, leave with a showroom shine.</p>
           <div class="cta">
             <a class="btn primary big" href="booking.html">Book a slot</a>
             <a class="btn ghost big" href="services.html">View services</a>
           </div>
           <ul class="badges">
-            <li>💳 PayFast checkout (optional)</li>
-            <li>📲 SMS/Email alerts</li>
+            <li>💳 PayFast checkout</li>
+            <li>📲 Email/SMS alerts</li>
             <li>🕘 Same-day slots</li>
           </ul>
         </div>
@@ -53,11 +56,11 @@
         </article>
         <article class="card lift">
           <h3>Transparent pricing</h3>
-          <p>Clear packages. No upsell surprises. Great value.</p>
+          <p>Clear packages. No surprises. Great value.</p>
         </article>
         <article class="card lift">
           <h3>On-time service</h3>
-          <p>Arrive 👉 wash 👉 go. We respect your schedule.</p>
+          <p>Arrive → wash → go. We respect your schedule.</p>
         </article>
       </div>
     </section>
@@ -65,5 +68,51 @@
     <section class="split container">
       <div class="split-copy">
         <h2>Made for phones. Built for speed.</h2>
-        <p>Over 90% of South African internet usage is mobile. We designed the whole experience for small screens — fast, simple, and beautiful.</p>
-        <a class="btn" href="booking.html">Try the booking demo →</a>
+        <p>Over 90% of local usage is mobile. We designed the whole experience for small screens — fast, simple, beautiful.</p>
+        <a class="btn" href="booking.html">Try the booking flow →</a>
+      </div>
+      <div class="split-art phone-shadow" aria-hidden="true">
+        <div class="phone-mock"></div>
+      </div>
+    </section>
+
+    <section class="pricing container">
+      <h2 class="section-title">Popular packages</h2>
+      <div class="grid three">
+        <article class="card price lift">
+          <h3>Express Wash</h3>
+          <p class="big">R 80</p>
+          <p>Exterior rinse &amp; dry • 30 mins</p>
+          <a class="btn gold" href="booking.html?svc=express">Book Express</a>
+        </article>
+        <article class="card price lift">
+          <h3>Standard Wash</h3>
+          <p class="big">R 120</p>
+          <p>Exterior + vacuum • 45 mins</p>
+          <a class="btn gold" href="booking.html?svc=standard">Book Standard</a>
+        </article>
+        <article class="card price lift">
+          <h3>Premium Detail</h3>
+          <p class="big">R 250</p>
+          <p>Interior + exterior detail • 90 mins</p>
+          <a class="btn gold" href="booking.html?svc=premium">Book Premium</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="cta-bar">
+      <div class="container cta-bar-inner">
+        <h3>Ready to skip the queue?</h3>
+        <a class="btn primary" href="booking.html">Book now</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> 2Fast 2Clean • Johannesburg</p>
+  </footer>
+
+  <script src="assets/config.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

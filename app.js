@@ -1,9 +1,8 @@
-// Tiny helpers
 const $ = (q, el=document) => el.querySelector(q);
 const $$ = (q, el=document) => [...el.querySelectorAll(q)];
 const yearEl = $("#year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
-const cfg = window.__APP_CONFIG__ || { MOCK_MODE: true };
+const cfg = window.__APP_CONFIG__ || { MOCK_MODE: false };
 
 // Theme toggle
 const themeToggle = $("#themeToggle");
@@ -17,14 +16,14 @@ const themeToggle = $("#themeToggle");
   });
 })();
 
-// Shared service catalog
+// Services
 const SERVICES = [
   { id: 'express',  name: 'Express Wash',   price: 80,  duration: 30, desc: 'Exterior rinse & dry' },
   { id: 'standard', name: 'Standard Wash',  price: 120, duration: 45, desc: 'Exterior + vacuum' },
   { id: 'premium',  name: 'Premium Detail', price: 250, duration: 90, desc: 'Full interior & exterior detail' },
 ];
 
-// ---- BOOKING PAGE ----
+// Booking page
 if (location.pathname.endsWith("booking.html")) {
   const svcGrid = $("#svcGrid");
   const dayInput = $("#dayInput");
@@ -36,16 +35,10 @@ if (location.pathname.endsWith("booking.html")) {
   const confirmBtn = $("#confirmBtn");
   const errEl = $("#err");
   const okEl = $("#ok");
-  const modeText = $("#modeText");
-  const payModeTag = $("#payModeTag");
 
   let selectedService = null;
   let selectedSlot = null;
 
-  modeText.textContent = cfg.MOCK_MODE ? "MOCK (demo)" : "REAL (PayFast)";
-  payModeTag.textContent = cfg.MOCK_MODE ? "(mock)" : "(PayFast)";
-
-  // Preselect svc from query
   const params = new URLSearchParams(location.search);
   const svcParam = params.get("svc");
 
@@ -77,13 +70,11 @@ if (location.pathname.endsWith("booking.html")) {
     }
   }
 
-  // Default date = today (local)
   function isoDate(d){ const tzOff = d.getTimezoneOffset(); const local = new Date(d - tzOff*60000); return local.toISOString().slice(0,10); }
   const today = new Date();
   dayInput.value = isoDate(today);
   dayInput.min = isoDate(today);
 
-  // Slots 09:00–16:00 hourly, capacity=4
   function getSlotsForDay(day) {
     const slots = [];
     for (let h=9; h<=16; h++){
@@ -104,10 +95,7 @@ if (location.pathname.endsWith("booking.html")) {
     slotsWrap.innerHTML = "";
     selectedSlot = null;
 
-    if (!slots.length) {
-      noSlotsMsg.hidden = false;
-      return;
-    }
+    if (!slots.length) { noSlotsMsg.hidden = false; return; }
     noSlotsMsg.hidden = true;
 
     slots.forEach(s=>{
@@ -124,10 +112,7 @@ if (location.pathname.endsWith("booking.html")) {
     });
   }
 
-  function loadBookings(){
-    try { return JSON.parse(localStorage.getItem("bookings") || "[]"); }
-    catch { return []; }
-  }
+  function loadBookings(){ try { return JSON.parse(localStorage.getItem("bookings") || "[]"); } catch { return []; } }
   function saveBookings(rows){ localStorage.setItem("bookings", JSON.stringify(rows)); }
   function nextId(){ const all = loadBookings(); return (all.reduce((m, r)=>Math.max(m, r.id), 0) || 0) + 1; }
 
@@ -140,11 +125,6 @@ if (location.pathname.endsWith("booking.html")) {
     if (!name) return "Please enter your full name.";
     if (!/^\+?\d{8,15}$/.test(phone)) return "Enter a valid phone number (e.g., +27…).";
     return null;
-  }
-
-  async function mockCharge(amountCents){
-    await new Promise(r=>setTimeout(r, 700));
-    return { ok: true, ref: 'MOCK-' + Math.random().toString(36).slice(2,8).toUpperCase() };
   }
 
   async function submit(){
@@ -171,21 +151,10 @@ if (location.pathname.endsWith("booking.html")) {
       created_at: new Date().toISOString()
     };
 
-    if (cfg.MOCK_MODE) {
-      // Simulate charge
-      const res = await mockCharge(amount*100);
-      row.status = res.ok ? 'CONFIRMED' : 'PENDING';
-      row.payment_status = res.ok ? 'PAID' : 'UNPAID';
-      const all = loadBookings(); all.push(row); saveBookings(all);
-      okEl.textContent = res.ok ? `Booking #${id} confirmed. (Payment mock OK)` : `Booking #${id} created (mock).`;
-      okEl.hidden = false; errEl.hidden = true;
-      selectedSlot = null; renderSlots();
-      // (Optional) hit Netlify webhook to email/SMS in mock mode too
-      try { fetch(`${cfg.API_BASE}/notify-email`, {method:"POST", headers:{'Content-Type':'application/json'}, body: JSON.stringify(row)}).catch(()=>{}); } catch {}
-      return;
-    }
+    // Save pending booking so Admin can see it
+    const all = loadBookings(); all.push(row); saveBookings(all);
 
-    // REAL: request signed PayFast payload from serverless function, then submit redirect POST
+    // Ask serverless to create signed PayFast payload
     try{
       const resp = await fetch(`${cfg.API_BASE}/create-payment`, {
         method: "POST", headers: {"Content-Type":"application/json"},
@@ -197,13 +166,12 @@ if (location.pathname.endsWith("booking.html")) {
         })
       });
       if (!resp.ok) throw new Error("Payment init failed");
-      const formData = await resp.json(); // contains fields for PayFast
-      // Persist pending booking locally (status will be updated via ITN in admin)
-      const all = loadBookings(); all.push(row); saveBookings(all);
-      // Build and auto-submit a form to PayFast process URL
+      const formData = await resp.json();
+
+      // Redirect to PayFast with auto-submitted form
       const form = document.createElement("form");
       form.method = "POST";
-      form.action = formData.process_url; // https://www.payfast.co.za/eng/process
+      form.action = formData.process_url;
       for (const [k,v] of Object.entries(formData.fields)){
         const input = document.createElement("input");
         input.type = "hidden"; input.name = k; input.value = v;
@@ -222,7 +190,7 @@ if (location.pathname.endsWith("booking.html")) {
   confirmBtn?.addEventListener("click", submit);
 }
 
-// ---- ADMIN PAGE ----
+// Admin page
 if (location.pathname.endsWith("admin.html")) {
   const adminLoginBtn = $("#adminLogin");
   const adminEmail = $("#adminEmail");
@@ -231,10 +199,7 @@ if (location.pathname.endsWith("admin.html")) {
   const dash = $("#dash");
   const tblBody = $("#bookingsTable tbody");
 
-  function loadBookings(){
-    try { return JSON.parse(localStorage.getItem("bookings") || "[]"); }
-    catch { return []; }
-  }
+  function loadBookings(){ try { return JSON.parse(localStorage.getItem("bookings") || "[]"); } catch { return []; } }
   function saveBookings(rows){ localStorage.setItem("bookings", JSON.stringify(rows)); }
 
   function renderTable(){

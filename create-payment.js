@@ -10,13 +10,9 @@ export const handler = async (event) => {
   const merchant_key = process.env.PAYFAST_MERCHANT_KEY;
   const passphrase   = process.env.PAYFAST_PASSPHRASE;
 
-  // Build fields for PayFast
   const fields = {
-    merchant_id,
-    merchant_key,
-    return_url,
-    cancel_url,
-    notify_url,
+    merchant_id, merchant_key,
+    return_url, cancel_url, notify_url,
     m_payment_id: `BKG-${id}`,
     amount: Number(amount).toFixed(2),
     item_name: item_name || "Car Wash",
@@ -25,7 +21,6 @@ export const handler = async (event) => {
     cell_number: phone || ""
   };
 
-  // Create signature (sort keys, build query, append passphrase, md5)
   const query = Object.entries(fields)
     .filter(([,v]) => v !== undefined && v !== null)
     .map(([k,v]) => `${k}=${encodeURIComponent(v).replace(/%20/g, "+")}`)
@@ -34,7 +29,6 @@ export const handler = async (event) => {
 
   const sigString = passphrase ? `${query}&passphrase=${encodeURIComponent(passphrase).replace(/%20/g, "+")}` : query;
   const signature = crypto.createHash("md5").update(sigString).digest("hex");
-
   fields.signature = signature;
 
   return {
