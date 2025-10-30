@@ -1,30 +1,30 @@
-// Theme toggle & year label
+// Tiny helpers
 const $ = (q, el=document) => el.querySelector(q);
 const $$ = (q, el=document) => [...el.querySelectorAll(q)];
 const yearEl = $("#year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
+const cfg = window.__APP_CONFIG__ || { MOCK_MODE: true };
 
+// Theme toggle
 const themeToggle = $("#themeToggle");
 (function initTheme(){
   const saved = localStorage.getItem("theme") || "dark";
   if(saved === "light") document.documentElement.classList.add("light");
-  if(themeToggle){
-    themeToggle.addEventListener("click", (e)=>{
-      e.preventDefault();
-      document.documentElement.classList.toggle("light");
-      localStorage.setItem("theme", document.documentElement.classList.contains("light") ? "light" : "dark");
-    });
-  }
+  themeToggle?.addEventListener("click", (e)=>{
+    e.preventDefault();
+    document.documentElement.classList.toggle("light");
+    localStorage.setItem("theme", document.documentElement.classList.contains("light") ? "light" : "dark");
+  });
 })();
 
-// --- Shared "services" config (mirrors what’s on Services page)
+// Shared service catalog
 const SERVICES = [
-  { id: 'express', name: 'Express Wash', price: 80, duration: 30, desc: 'Exterior rinse & dry' },
-  { id: 'standard', name: 'Standard Wash', price: 120, duration: 45, desc: 'Exterior + vacuum' },
-  { id: 'premium', name: 'Premium Detail', price: 250, duration: 90, desc: 'Full interior & exterior detail' },
+  { id: 'express',  name: 'Express Wash',   price: 80,  duration: 30, desc: 'Exterior rinse & dry' },
+  { id: 'standard', name: 'Standard Wash',  price: 120, duration: 45, desc: 'Exterior + vacuum' },
+  { id: 'premium',  name: 'Premium Detail', price: 250, duration: 90, desc: 'Full interior & exterior detail' },
 ];
 
-// --- Booking page logic (client-side demo)
+// ---- BOOKING PAGE ----
 if (location.pathname.endsWith("booking.html")) {
   const svcGrid = $("#svcGrid");
   const dayInput = $("#dayInput");
@@ -36,28 +36,34 @@ if (location.pathname.endsWith("booking.html")) {
   const confirmBtn = $("#confirmBtn");
   const errEl = $("#err");
   const okEl = $("#ok");
+  const modeText = $("#modeText");
+  const payModeTag = $("#payModeTag");
+
   let selectedService = null;
   let selectedSlot = null;
 
-  // Load preselected service from query ?svc=premium
+  modeText.textContent = cfg.MOCK_MODE ? "MOCK (demo)" : "REAL (PayFast)";
+  payModeTag.textContent = cfg.MOCK_MODE ? "(mock)" : "(PayFast)";
+
+  // Preselect svc from query
   const params = new URLSearchParams(location.search);
   const svcParam = params.get("svc");
 
-  // Render service cards
   function renderServices() {
     svcGrid.innerHTML = "";
     SERVICES.forEach(svc => {
-      const a = document.createElement("article");
-      a.className = "card price";
-      a.innerHTML = `
+      const card = document.createElement("article");
+      card.className = "card price lift";
+      const selected = selectedService?.id===svc.id;
+      card.innerHTML = `
         <h3>${svc.name}</h3>
         <p class="big">R ${svc.price}</p>
         <p>${svc.desc} • ${svc.duration} mins</p>
-        <button class="btn ${selectedService?.id===svc.id ? 'primary' : ''}" data-svc="${svc.id}">
-          ${selectedService?.id===svc.id ? 'Selected' : 'Select'}
+        <button class="btn ${selected ? 'primary' : 'gold'}" data-svc="${svc.id}">
+          ${selected ? 'Selected' : 'Select'}
         </button>
       `;
-      svcGrid.appendChild(a);
+      svcGrid.appendChild(card);
     });
     $$("#svcGrid [data-svc]").forEach(btn=>{
       btn.addEventListener("click", ()=>{
@@ -65,29 +71,25 @@ if (location.pathname.endsWith("booking.html")) {
         renderServices();
       });
     });
-
-    // Auto-select from query
     if (svcParam && !selectedService) {
       const pre = SERVICES.find(s => s.id === svcParam);
       if (pre) { selectedService = pre; renderServices(); }
     }
   }
 
-  // Default date = today
-  function isoDate(d){ return d.toISOString().slice(0,10); }
+  // Default date = today (local)
+  function isoDate(d){ const tzOff = d.getTimezoneOffset(); const local = new Date(d - tzOff*60000); return local.toISOString().slice(0,10); }
   const today = new Date();
-  if (dayInput) {
-    dayInput.value = isoDate(today);
-    dayInput.min = isoDate(today);
-  }
+  dayInput.value = isoDate(today);
+  dayInput.min = isoDate(today);
 
-  // Generate slots 09:00–16:00 hourly, capacity=4 (demo)
+  // Slots 09:00–16:00 hourly, capacity=4
   function getSlotsForDay(day) {
     const slots = [];
     for (let h=9; h<=16; h++){
-      slots.push({ id: `${day}-${h.toString().padStart(2,'0')}:00`, time: `${h.toString().padStart(2,'0')}:00`, capacity: 4 });
+      const hh = h.toString().padStart(2,'0') + ":00";
+      slots.push({ id: `${day}-${hh}`, time: hh, capacity: 4 });
     }
-    // Reduce remaining based on existing bookings
     const all = loadBookings();
     const remaining = {};
     slots.forEach(s => remaining[s.id] = s.capacity);
@@ -115,7 +117,6 @@ if (location.pathname.endsWith("booking.html")) {
       btn.disabled = s.remaining <= 0;
       btn.addEventListener("click", ()=>{
         selectedSlot = s;
-        // mark selected
         $$(".slot-btn", slotsWrap).forEach(b => b.classList.remove("primary"));
         btn.classList.add("primary");
       });
@@ -127,13 +128,8 @@ if (location.pathname.endsWith("booking.html")) {
     try { return JSON.parse(localStorage.getItem("bookings") || "[]"); }
     catch { return []; }
   }
-  function saveBookings(rows){
-    localStorage.setItem("bookings", JSON.stringify(rows));
-  }
-  function nextId(){
-    const all = loadBookings();
-    return (all.reduce((m, r)=>Math.max(m, r.id), 0) || 0) + 1;
-  }
+  function saveBookings(rows){ localStorage.setItem("bookings", JSON.stringify(rows)); }
+  function nextId(){ const all = loadBookings(); return (all.reduce((m, r)=>Math.max(m, r.id), 0) || 0) + 1; }
 
   function validate(){
     errEl.hidden = true; okEl.hidden = true;
@@ -147,7 +143,6 @@ if (location.pathname.endsWith("booking.html")) {
   }
 
   async function mockCharge(amountCents){
-    // Simulate success
     await new Promise(r=>setTimeout(r, 700));
     return { ok: true, ref: 'MOCK-' + Math.random().toString(36).slice(2,8).toUpperCase() };
   }
@@ -156,13 +151,11 @@ if (location.pathname.endsWith("booking.html")) {
     const v = validate();
     if (v){ errEl.textContent = v; errEl.hidden = false; return; }
 
-    const day = dayInput.value;
     const id = nextId();
     const amount = selectedService.price;
-    const res = await mockCharge(amount*100);
+    const day = dayInput.value;
 
-    const rows = loadBookings();
-    rows.push({
+    const row = {
       id,
       customer_name: nameEl.value.trim(),
       customer_phone: phoneEl.value.trim(),
@@ -173,21 +166,54 @@ if (location.pathname.endsWith("booking.html")) {
       day,
       time: selectedSlot.time,
       slotId: selectedSlot.id,
-      status: res.ok ? 'CONFIRMED' : 'PENDING',
-      payment_status: res.ok ? 'PAID' : 'UNPAID',
+      status: 'PENDING',
+      payment_status: 'UNPAID',
       created_at: new Date().toISOString()
-    });
-    saveBookings(rows);
+    };
 
-    okEl.textContent = res.ok
-      ? `Booking #${id} confirmed. (Payment mock OK)`
-      : `Booking #${id} created, payment pending (mock).`;
-    okEl.hidden = false;
-    errEl.hidden = true;
+    if (cfg.MOCK_MODE) {
+      // Simulate charge
+      const res = await mockCharge(amount*100);
+      row.status = res.ok ? 'CONFIRMED' : 'PENDING';
+      row.payment_status = res.ok ? 'PAID' : 'UNPAID';
+      const all = loadBookings(); all.push(row); saveBookings(all);
+      okEl.textContent = res.ok ? `Booking #${id} confirmed. (Payment mock OK)` : `Booking #${id} created (mock).`;
+      okEl.hidden = false; errEl.hidden = true;
+      selectedSlot = null; renderSlots();
+      // (Optional) hit Netlify webhook to email/SMS in mock mode too
+      try { fetch(`${cfg.API_BASE}/notify-email`, {method:"POST", headers:{'Content-Type':'application/json'}, body: JSON.stringify(row)}).catch(()=>{}); } catch {}
+      return;
+    }
 
-    // soft reset selection
-    selectedSlot = null;
-    renderSlots();
+    // REAL: request signed PayFast payload from serverless function, then submit redirect POST
+    try{
+      const resp = await fetch(`${cfg.API_BASE}/create-payment`, {
+        method: "POST", headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({
+          id, amount, name: row.customer_name, email: row.customer_email,
+          phone: row.customer_phone, item_name: row.service,
+          return_url: cfg.PAYFAST.return_url, cancel_url: cfg.PAYFAST.cancel_url,
+          notify_url: cfg.PAYFAST.notify_url
+        })
+      });
+      if (!resp.ok) throw new Error("Payment init failed");
+      const formData = await resp.json(); // contains fields for PayFast
+      // Persist pending booking locally (status will be updated via ITN in admin)
+      const all = loadBookings(); all.push(row); saveBookings(all);
+      // Build and auto-submit a form to PayFast process URL
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = formData.process_url; // https://www.payfast.co.za/eng/process
+      for (const [k,v] of Object.entries(formData.fields)){
+        const input = document.createElement("input");
+        input.type = "hidden"; input.name = k; input.value = v;
+        form.appendChild(input);
+      }
+      document.body.appendChild(form); form.submit();
+    }catch(e){
+      errEl.textContent = "Could not start payment. Please try again.";
+      errEl.hidden = false;
+    }
   }
 
   renderServices();
@@ -196,7 +222,7 @@ if (location.pathname.endsWith("booking.html")) {
   confirmBtn?.addEventListener("click", submit);
 }
 
-// --- Admin page logic (reads from localStorage)
+// ---- ADMIN PAGE ----
 if (location.pathname.endsWith("admin.html")) {
   const adminLoginBtn = $("#adminLogin");
   const adminEmail = $("#adminEmail");
@@ -209,9 +235,7 @@ if (location.pathname.endsWith("admin.html")) {
     try { return JSON.parse(localStorage.getItem("bookings") || "[]"); }
     catch { return []; }
   }
-  function saveBookings(rows){
-    localStorage.setItem("bookings", JSON.stringify(rows));
-  }
+  function saveBookings(rows){ localStorage.setItem("bookings", JSON.stringify(rows)); }
 
   function renderTable(){
     const rows = loadBookings().sort((a,b)=> (a.day+a.time).localeCompare(b.day+b.time));
@@ -232,7 +256,7 @@ if (location.pathname.endsWith("admin.html")) {
         <td>${r.day}</td>
         <td>${r.time}</td>
         <td>${r.status} • ${r.payment_status}</td>
-        <td>
+        <td class="row-actions">
           <button class="btn small" data-act="confirm" data-id="${r.id}">Confirm</button>
           <button class="btn small" data-act="cancel" data-id="${r.id}">Cancel</button>
           <button class="btn small" data-act="complete" data-id="${r.id}">Complete</button>
@@ -241,7 +265,6 @@ if (location.pathname.endsWith("admin.html")) {
       tblBody.appendChild(tr);
     });
 
-    // Actions
     $$("button[data-act]").forEach(btn=>{
       btn.addEventListener("click", ()=>{
         const id = Number(btn.dataset.id);

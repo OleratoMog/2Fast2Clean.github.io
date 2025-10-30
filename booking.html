@@ -8,9 +8,9 @@
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
-  <header class="site-header">
+  <header class="site-header glass">
     <a class="brand" href="index.html">
-      <img src="assets/logo.svg" alt="2Fast 2Clean logo" width="32" height="32">
+      <img src="assets/logo.svg" alt="2Fast 2Clean logo" width="36" height="36">
       <span>2Fast 2Clean</span>
     </a>
     <nav class="nav">
@@ -24,27 +24,25 @@
 
   <main class="container">
     <h1>Book your wash</h1>
-    <p class="lead">Choose a service, pick a day &amp; time, add your details, and confirm. (Demo only: payment &amp; notifications are simulated.)</p>
+    <p class="lead">Choose a service, pick a date &amp; time, add your details, and confirm. You can run mock mode or switch to real PayFast in <code>assets/config.js</code>.</p>
 
-    <section class="card">
+    <section class="card lift">
       <h2>1) Choose a service</h2>
-      <div class="grid three small-gap" id="svcGrid">
-        <!-- Services injected by app.js -->
-      </div>
+      <div class="grid three small-gap" id="svcGrid"></div>
     </section>
 
-    <section class="card">
-      <h2>2) Pick a day</h2>
+    <section class="card lift">
+      <h2>2) Pick a date</h2>
       <input id="dayInput" type="date" />
     </section>
 
-    <section class="card">
+    <section class="card lift">
       <h2>3) Pick a time</h2>
       <div id="slotsWrap" class="slots"></div>
       <p id="noSlotsMsg" class="muted" hidden>No slots available for this day.</p>
     </section>
 
-    <section class="card">
+    <section class="card lift">
       <h2>4) Your details</h2>
       <div class="form-grid">
         <div>
@@ -60,7 +58,11 @@
           <input id="email" type="email" placeholder="you@example.com" />
         </div>
       </div>
-      <button id="confirmBtn" class="btn primary">Confirm &amp; Pay (mock)</button>
+
+      <div class="pay-row">
+        <button id="confirmBtn" class="btn primary">Confirm &amp; Pay <span id="payModeTag"></span></button>
+        <span class="muted small">Current mode: <code id="modeText"></code></span>
+      </div>
       <p id="err" class="error" hidden></p>
       <p id="ok" class="ok" hidden></p>
     </section>
@@ -70,6 +72,7 @@
     <p>© <span id="year"></span> 2Fast 2Clean • Johannesburg</p>
   </footer>
 
+  <script src="assets/config.js"></script>
   <script src="assets/app.js"></script>
 </body>
 </html>

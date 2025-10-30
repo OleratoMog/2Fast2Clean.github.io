@@ -8,9 +8,9 @@
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
-  <header class="site-header">
+  <header class="site-header glass">
     <a class="brand" href="index.html">
-      <img src="assets/logo.svg" alt="2Fast 2Clean logo" width="32" height="32">
+      <img src="assets/logo.svg" alt="2Fast 2Clean logo" width="36" height="36">
       <span>2Fast 2Clean</span>
     </a>
     <nav class="nav">
@@ -23,29 +23,29 @@
   </header>
 
   <main class="container">
-    <h1>Admin Dashboard (Demo)</h1>
-    <p class="muted">Client-side only. Bookings are saved in your browser (localStorage).</p>
+    <h1>Admin Dashboard</h1>
+    <p class="muted">Client-side demo. When using real payments, ITN/webhooks will update the status.</p>
 
-    <section class="card">
+    <section class="card lift">
       <h2>Sign in</h2>
       <div class="form-inline">
         <input id="adminEmail" placeholder="admin@2fast.local" value="admin@2fast.local">
         <input id="adminPass" type="password" placeholder="Password" value="admin123">
-        <button id="adminLogin" class="btn">Sign in</button>
+        <button id="adminLogin" class="btn gold">Sign in</button>
       </div>
       <p id="adminErr" class="error" hidden></p>
     </section>
 
-    <section id="dash" class="card" hidden>
-      <h2>Today’s Bookings</h2>
+    <section id="dash" class="card lift" hidden>
+      <h2>Bookings</h2>
       <div class="table-wrap">
-        <table class="table" id="bookingsTable">
+        <table class="table hover" id="bookingsTable">
           <thead>
             <tr>
               <th>ID</th><th>Customer</th><th>Phone</th><th>Service</th><th>Day</th><th>Time</th><th>Status</th><th>Actions</th>
             </tr>
           </thead>
-          <tbody><!-- rows injected by app.js --></tbody>
+          <tbody></tbody>
         </table>
       </div>
     </section>
@@ -55,6 +55,7 @@
     <p>© <span id="year"></span> 2Fast 2 Clean • Johannesburg</p>
   </footer>
 
+  <script src="assets/config.js"></script>
   <script src="assets/app.js"></script>
 </body>
 </html>
