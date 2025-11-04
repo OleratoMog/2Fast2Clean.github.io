@@ -1,118 +1,240 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>2Fast 2Clean — Premium Car Wash</title>
+  <title>2Fast 2Clean — Pretoria Premium Car Wash</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Premium, mobile-first car wash bookings. Skip the queue, secure checkout, instant confirmations." />
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <!-- Fonts -->
+  <meta name="description" content="Book your car wash at 2Fast 2Clean Pretoria in under a minute. Mobile-first bookings, secure payment options, and guaranteed time slots." />
+  
+  <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="site-header glass">
-    <a class="brand" href="index.html">
-      <img src="assets/logo.svg" alt="2Fast 2Clean logo" width="36" height="36">
-      <span>2Fast 2Clean</span>
-    </a>
-    <nav class="nav">
-      <a href="index.html" class="active">Home</a>
-      <a href="services.html">Services</a>
-      <a href="booking.html">Book</a>
-      <a href="admin.html">Admin</a>
-      <button id="themeToggle" class="btn small" aria-label="Toggle theme">🌗</button>
-    </nav>
-  </header>
+  <div class="main" id="home">
+    <div class="overlay"></div>
 
-  <main>
-    <section class="hero bg-cover">
-      <div class="overlay"></div>
-      <div class="container hero-inner">
-        <div class="hero-copy">
-          <h1>Premium car wash. <span class="accent">Zero queue.</span></h1>
-          <p class="lead">Mobile-first bookings, transparent pricing, and instant confirmations. Arrive on time, leave with a showroom shine.</p>
-          <div class="cta">
-            <a class="btn primary big" href="booking.html">Book a slot</a>
-            <a class="btn ghost big" href="services.html">View services</a>
-          </div>
-          <ul class="badges">
-            <li>💳 PayFast checkout</li>
-            <li>📲 Email/SMS alerts</li>
-            <li>🕘 Same-day slots</li>
-          </ul>
+    <!-- NAVBAR -->
+    <div class="navbar">
+      <div class="icon">
+        <h2 class="logo">2Fast2Clean</h2>
+      </div>
+
+      <div class="menu">
+        <ul>
+       <ul>
+  <li><a href="index.html">HOME</a></li>
+  <li><a href="services.html">SERVICES</a></li>
+  <li><a href="booking.html">BOOK</a></li>
+  <li><a href="admin.html">ADMIN</a></li>
+  <li><a href="about.html">ABOUT</a></li>
+</ul>
+
+
+      </div>
+
+      <div class="search">
+        <input class="srch" type="text" name="" placeholder="Search services">
+        <button class="btn">Search</button>
+      </div>
+    </div>
+
+    <!-- HERO + LOGIN -->
+    <div class="content">
+      <div class="hero-copy">
+        <h1>Premium <span>Car Wash</span> in Pretoria</h1>
+        <p class="par">
+          Book your wash at <strong>2Fast 2Clean Pretoria</strong> in under a minute.<br>
+          Mobile-first bookings, secure payment options, and guaranteed time slots.<br>
+          Serving Pretoria &amp; Centurion with professional, reliable car care.
+        </p>
+
+        <button class="cn"><a href="booking.html">Book A Slot</a></button>
+
+
+        <div class="hero-tags">
+          <span>🚗 Exterior &amp; Interior Detailing</span>
+          <span>💳 Pay with card / EFT on-site</span>
+          <span>📍 Pretoria, South Africa</span>
         </div>
       </div>
-    </section>
 
-    <section class="container features">
-      <h2 class="section-title">Why choose 2Fast 2Clean?</h2>
-      <div class="grid three">
-        <article class="card lift">
-          <h3>Book online</h3>
-          <p>Choose a time that suits you. No queues, no guesswork.</p>
-        </article>
-        <article class="card lift">
-          <h3>Transparent pricing</h3>
-          <p>Clear packages. No surprises. Great value.</p>
-        </article>
-        <article class="card lift">
-          <h3>On-time service</h3>
-          <p>Arrive → wash → go. We respect your schedule.</p>
-        </article>
-      </div>
-    </section>
+      <!-- Admin login panel (demo only, no real backend yet) -->
+      <div class="form" id="admin-login">
+        <h2>Admin Login</h2>
+        <input type="email" name="email" placeholder="Enter Email">
+        <input type="password" name="password" placeholder="Enter Password">
+        <button class="btnn">Login</button>
 
-    <section class="split container">
-      <div class="split-copy">
-        <h2>Made for phones. Built for speed.</h2>
-        <p>Over 90% of local usage is mobile. We designed the whole experience for small screens — fast, simple, beautiful.</p>
-        <a class="btn" href="booking.html">Try the booking flow →</a>
-      </div>
-      <div class="split-art phone-shadow" aria-hidden="true">
-        <div class="phone-mock"></div>
-      </div>
-    </section>
+        <p class="link">Don’t have access?<br><a href="#admin">View admin info</a></p>
+        <p class="liw">Follow us</p>
 
-    <section class="pricing container">
-      <h2 class="section-title">Popular packages</h2>
-      <div class="grid three">
-        <article class="card price lift">
+        <div class="social-icons">
+          <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
+          <a href="#"><ion-icon name="logo-instagram"></ion-icon></a>
+          <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
+          <a href="#"><ion-icon name="logo-google"></ion-icon></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES SECTION -->
+  <section id="services" class="section section-dark">
+    <div class="section-inner">
+      <h2 class="section-title">Our Wash Packages (ZAR)</h2>
+      <p class="section-subtitle">Clear pricing, predictable timing, and a spotless finish.</p>
+
+      <div class="cards-row">
+        <article class="card">
           <h3>Express Wash</h3>
-          <p class="big">R 80</p>
-          <p>Exterior rinse &amp; dry • 30 mins</p>
-          <a class="btn gold" href="booking.html?svc=express">Book Express</a>
+          <p class="price">R 80</p>
+          <ul>
+            <li>Exterior rinse &amp; dry</li>
+            <li>Tyre shine</li>
+            <li>Approx. 30 minutes</li>
+          </ul>
         </article>
-        <article class="card price lift">
+
+        <article class="card">
           <h3>Standard Wash</h3>
-          <p class="big">R 120</p>
-          <p>Exterior + vacuum • 45 mins</p>
-          <a class="btn gold" href="booking.html?svc=standard">Book Standard</a>
+          <p class="price">R 120</p>
+          <ul>
+            <li>Exterior wash &amp; vacuum</li>
+            <li>Windows inside &amp; out</li>
+            <li>Approx. 45 minutes</li>
+          </ul>
         </article>
-        <article class="card price lift">
+
+        <article class="card">
           <h3>Premium Detail</h3>
-          <p class="big">R 250</p>
-          <p>Interior + exterior detail • 90 mins</p>
-          <a class="btn gold" href="booking.html?svc=premium">Book Premium</a>
+          <p class="price">R 250</p>
+          <ul>
+            <li>Full interior &amp; exterior detail</li>
+            <li>Wax &amp; protection</li>
+            <li>Approx. 90 minutes</li>
+          </ul>
         </article>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="cta-bar">
-      <div class="container cta-bar-inner">
-        <h3>Ready to skip the queue?</h3>
-        <a class="btn primary" href="booking.html">Book now</a>
+  <!-- BOOKING SECTION -->
+  <section id="booking" class="section section-light">
+    <div class="section-inner">
+      <h2 class="section-title">Book Your Slot</h2>
+      <p class="section-subtitle">
+        Choose your service, pick a time, and arrive when it suits you. No more waiting in long queues.
+      </p>
+
+      <div class="booking-layout">
+        <div class="booking-steps">
+          <ol>
+            <li>Select your wash package (Express, Standard, or Premium).</li>
+            <li>Pick a date and preferred time slot.</li>
+            <li>Enter your contact details.</li>
+            <li>Arrive on time and pay safely on-site (card, Zapper, or EFT).</li>
+          </ol>
+          <p class="note">
+            * Online payment &amp; live slot integrations would require a real backend (e.g. PayFast + server).
+          </p>
+        </div>
+
+        <div class="booking-form">
+          <h3>Quick Booking (Demo)</h3>
+          <label>
+            Name
+            <input type="text" placeholder="e.g. Thabo Mokoena">
+          </label>
+          <label>
+            Phone (+27)
+            <input type="tel" placeholder="+27 82 123 4567">
+          </label>
+          <label>
+            Service
+            <select>
+              <option>Express Wash — R 80</option>
+              <option>Standard Wash — R 120</option>
+              <option>Premium Detail — R 250</option>
+            </select>
+          </label>
+          <label>
+            Preferred Date
+            <input type="date">
+          </label>
+          <label>
+            Preferred Time
+            <input type="time">
+          </label>
+          <button class="btnn wide">Request Booking</button>
+          <p class="note small">This is a front-end demo only. To make it live, you’d connect this form to a real backend.</p>
+        </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
-  <footer class="site-footer">
-    <p>© <span id="year"></span> 2Fast 2Clean • Johannesburg</p>
+  <!-- ADMIN SECTION -->
+  <section id="admin" class="section section-dark">
+    <div class="section-inner">
+      <h2 class="section-title">Admin &amp; Operations</h2>
+      <p class="section-subtitle">
+        Centralised booking view, daily schedule, and customer history — designed for growing car wash businesses in Pretoria.
+      </p>
+
+      <div class="cards-row">
+        <article class="card">
+          <h3>Booking Overview</h3>
+          <p>View all bookings for the day, manage peak hours, and avoid double-booking bays.</p>
+        </article>
+        <article class="card">
+          <h3>Customer History</h3>
+          <p>Track returning customers, favourite packages, and visit frequency for loyalty rewards.</p>
+        </article>
+        <article class="card">
+          <h3>Payments &amp; Reports</h3>
+          <p>Daily, weekly, and monthly reporting on washes completed and total revenue in ZAR.</p>
+        </article>
+      </div>
+
+      <p class="center link-text">
+        Admin login panel is on the homepage hero (top right). For a real system, this would be connected to a secure database and authentication backend.
+      </p>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section id="about" class="section section-light">
+    <div class="section-inner">
+      <h2 class="section-title">About 2Fast 2Clean Pretoria</h2>
+      <p class="section-subtitle">
+        Built for a mobile-first South Africa — focused on convenience, quality, and digital bookings.
+      </p>
+      <p class="about-text">
+        2Fast 2Clean is a Pretoria-based car wash concept that puts your time first. Instead of waiting
+        in long queues, you choose a slot that works for you, arrive on time, and leave with a spotless car.
+        Our vision is to combine professional detailing with a seamless online booking experience, built around
+        how South Africans actually use their phones and services.
+      </p>
+      <p class="about-text">
+        We’re located in Pretoria and serve surrounding areas including Centurion, with fair pricing in ZAR,
+        friendly staff, and a focus on consistent quality and safety.
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© <span id="year"></span> 2Fast 2Clean • Pretoria, South Africa • All rights reserved.</p>
   </footer>
 
-  <script src="assets/config.js"></script>
-  <script src="assets/app.js"></script>
+  <!-- Ionicons for social icons -->
+  <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+
+  <!-- MAIN SITE SCRIPT -->
+  <script src="main.js"></script>
 </body>
 </html>
+

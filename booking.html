@@ -1,78 +1,114 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Book a Slot — 2Fast 2Clean</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css" />
+  <title>Book a Wash — 2Fast2Clean</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="site-header glass">
-    <a class="brand" href="index.html">
-      <img src="assets/logo.svg" alt="2Fast 2Clean logo" width="36" height="36">
-      <span>2Fast 2Clean</span>
-    </a>
-    <nav class="nav">
-      <a href="index.html">Home</a>
-      <a href="services.html">Services</a>
-      <a href="booking.html" class="active">Book</a>
-      <a href="admin.html">Admin</a>
-      <button id="themeToggle" class="btn small" aria-label="Toggle theme">🌗</button>
-    </nav>
-  </header>
-
-  <main class="container">
-    <h1>Book your wash</h1>
-    <p class="lead">Choose a service, pick a date &amp; time, add your details, and pay securely via PayFast.</p>
-
-    <section class="card lift">
-      <h2>1) Choose a service</h2>
-      <div class="grid three small-gap" id="svcGrid"></div>
-    </section>
-
-    <section class="card lift">
-      <h2>2) Pick a date</h2>
-      <input id="dayInput" type="date" />
-    </section>
-
-    <section class="card lift">
-      <h2>3) Pick a time</h2>
-      <div id="slotsWrap" class="slots"></div>
-      <p id="noSlotsMsg" class="muted" hidden>No slots available for this day.</p>
-    </section>
-
-    <section class="card lift">
-      <h2>4) Your details</h2>
-      <div class="form-grid">
-        <div>
-          <label for="name">Full name</label>
-          <input id="name" type="text" placeholder="e.g., Thabo Mokoena" />
-        </div>
-        <div>
-          <label for="phone">Phone (+27…)</label>
-          <input id="phone" type="tel" placeholder="+27…" />
-        </div>
-        <div>
-          <label for="email">Email (for receipt)</label>
-          <input id="email" type="email" placeholder="you@example.com" />
-        </div>
+  <div class="main book-page">
+    <div class="navbar">
+      <div class="icon">
+        <h2 class="logo">2Fast2Clean</h2>
       </div>
 
-      <div class="pay-row">
-        <button id="confirmBtn" class="btn primary">Pay with PayFast</button>
+      <div class="menu">
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="services.html">SERVICES</a></li>
+          <li><a href="booking.html">BOOK</a></li>
+          <li><a href="admin.html">ADMIN</a></li>
+          <li><a href="about.html">ABOUT</a></li>
+        </ul>
       </div>
-      <p id="err" class="error" hidden></p>
-      <p id="ok" class="ok" hidden></p>
-    </section>
-  </main>
+    </div>
 
-  <footer class="site-footer">
-    <p>© <span id="year"></span> 2Fast 2Clean • Johannesburg</p>
-  </footer>
+    <div class="content booking-content">
+      <h1>Book your wash in <span>Pretoria</span></h1>
+      <p class="par">
+        Choose your service, pick a time, and confirm your booking. Payment is processed securely in South African Rand (ZAR).
+      </p>
 
-  <script src="assets/config.js"></script>
-  <script src="assets/app.js"></script>
+      <div class="booking-form">
+        <h2>Booking details</h2>
+
+        <label>Full name</label>
+        <input type="text" id="fullName" placeholder="e.g. Thabo Mokoena">
+
+        <label>Phone number (+27)</label>
+        <input type="tel" id="phone" placeholder="+27 82 123 4567">
+
+        <label>Email address</label>
+        <input type="email" id="email" placeholder="you@example.com">
+
+        <label>Service</label>
+        <select id="service">
+          <option value="">Select a package</option>
+          <option value="express">Express Wash — R80</option>
+          <option value="standard">Standard Wash — R120</option>
+          <option value="premium">Premium Detail — R250</option>
+        </select>
+
+        <label>Date</label>
+        <input type="date" id="date">
+
+        <label>Time</label>
+        <input type="time" id="time">
+
+        <button class="btnn" id="bookNowBtn">Confirm & Pay</button>
+
+        <p id="bookingMessage" class="par"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = "https://your-backend-url.com"; // 👈 change this to your real backend URL
+
+    document.getElementById("bookNowBtn").addEventListener("click", async () => {
+      const name = document.getElementById("fullName").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const service = document.getElementById("service").value;
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+      const msg = document.getElementById("bookingMessage");
+
+      msg.style.color = "#fff";
+      msg.textContent = "";
+
+      if (!name || !phone || !service || !date || !time) {
+        msg.style.color = "#ff7200";
+        msg.textContent = "Please fill in all required fields.";
+        return;
+      }
+
+      try {
+        const res = await fetch(API_BASE + "/api/bookings/create-and-pay", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, phone, email, service, date, time })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          msg.style.color = "#ff7200";
+          msg.textContent = data.error || "There was an error creating your booking.";
+          return;
+        }
+
+        // If backend returns a payment URL (e.g. PayFast redirect URL), send them there
+        if (data.paymentUrl) {
+          window.location.href = data.paymentUrl;
+        } else {
+          msg.style.color = "#00ff7f";
+          msg.textContent = "Booking created successfully.";
+        }
+      } catch (e) {
+        msg.style.color = "#ff7200";
+        msg.textContent = "Network error. Please try again.";
+      }
+    });
+  </script>
 </body>
 </html>
