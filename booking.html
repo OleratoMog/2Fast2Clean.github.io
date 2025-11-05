@@ -3,9 +3,11 @@
 <head>
   <title>Book a Wash — 2Fast2Clean</title>
   <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
-<body>
-  <div class="main book-page">
+<body data-page="booking">
+  <div class="main">
     <div class="navbar">
       <div class="icon">
         <h2 class="logo">2Fast2Clean</h2>
@@ -15,100 +17,63 @@
         <ul>
           <li><a href="index.html">HOME</a></li>
           <li><a href="services.html">SERVICES</a></li>
-          <li><a href="booking.html">BOOK</a></li>
+          <li><a href="booking.html" class="active">BOOK</a></li>
           <li><a href="admin.html">ADMIN</a></li>
           <li><a href="about.html">ABOUT</a></li>
         </ul>
       </div>
     </div>
 
-    <div class="content booking-content">
+    <div class="content slim">
       <h1>Book your wash in <span>Pretoria</span></h1>
       <p class="par">
-        Choose your service, pick a time, and confirm your booking. Payment is processed securely in South African Rand (ZAR).
+        Fill in your details below. On the next step you’ll choose how you want to pay:
+        in person, card, PayFast, or Yoco.
       </p>
 
-      <div class="booking-form">
-        <h2>Booking details</h2>
+     <!-- Booking form box -->
+<div class="booking-form">
+  <h3>Confirm your booking</h3>
 
-        <label>Full name</label>
-        <input type="text" id="fullName" placeholder="e.g. Thabo Mokoena">
+  <label for="name">Full Name</label>
+  <input id="name" type="text" placeholder="e.g. Thabo Mokoena">
 
-        <label>Phone number (+27)</label>
-        <input type="tel" id="phone" placeholder="+27 82 123 4567">
+  <label for="phone">Phone (+27…)</label>
+  <input id="phone" type="tel" placeholder="+27…">
 
-        <label>Email address</label>
-        <input type="email" id="email" placeholder="you@example.com">
+  <label for="email">Email (optional)</label>
+  <input id="email" type="email" placeholder="you@example.com">
 
-        <label>Service</label>
-        <select id="service">
-          <option value="">Select a package</option>
-          <option value="express">Express Wash — R80</option>
-          <option value="standard">Standard Wash — R120</option>
-          <option value="premium">Premium Detail — R250</option>
-        </select>
+  <label for="day">Date</label>
+  <input id="day" type="date">
 
-        <label>Date</label>
-        <input type="date" id="date">
+  <label for="time">Time</label>
+  <input id="time" type="time">
 
-        <label>Time</label>
-        <input type="time" id="time">
+  <label for="service">Service</label>
+  <select id="service">
+    <option value="">Select a package</option>
+    <option value="express">Express Wash — R80</option>
+    <option value="standard">Standard Wash — R120</option>
+    <option value="premium">Premium Detail — R250</option>
+  </select>
 
-        <button class="btnn" id="bookNowBtn">Confirm & Pay</button>
+  <!-- THIS is the important button -->
+  <button
+    id="confirmPayBtn"
+    class="btnn wide"
+    type="button"
+  >
+    Confirm &amp; Pay
+  </button>
 
-        <p id="bookingMessage" class="par"></p>
-      </div>
+  <p id="bookingMessage" class="booking-message"></p>
+</div>
+
     </div>
   </div>
-
-  <script>
-    const API_BASE = "https://your-backend-url.com"; // 👈 change this to your real backend URL
-
-    document.getElementById("bookNowBtn").addEventListener("click", async () => {
-      const name = document.getElementById("fullName").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const service = document.getElementById("service").value;
-      const date = document.getElementById("date").value;
-      const time = document.getElementById("time").value;
-      const msg = document.getElementById("bookingMessage");
-
-      msg.style.color = "#fff";
-      msg.textContent = "";
-
-      if (!name || !phone || !service || !date || !time) {
-        msg.style.color = "#ff7200";
-        msg.textContent = "Please fill in all required fields.";
-        return;
-      }
-
-      try {
-        const res = await fetch(API_BASE + "/api/bookings/create-and-pay", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, phone, email, service, date, time })
-        });
-
-        const data = await res.json();
-
-        if (!res.ok) {
-          msg.style.color = "#ff7200";
-          msg.textContent = data.error || "There was an error creating your booking.";
-          return;
-        }
-
-        // If backend returns a payment URL (e.g. PayFast redirect URL), send them there
-        if (data.paymentUrl) {
-          window.location.href = data.paymentUrl;
-        } else {
-          msg.style.color = "#00ff7f";
-          msg.textContent = "Booking created successfully.";
-        }
-      } catch (e) {
-        msg.style.color = "#ff7200";
-        msg.textContent = "Network error. Please try again.";
-      }
-    });
-  </script>
+  <script src="config.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
+

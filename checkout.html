@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Checkout – 2Fast2Clean</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="main">
+    <div class="overlay"></div>
+
+    <!-- NAVBAR (same structure as index) -->
+    <div class="navbar">
+      <div class="icon">
+        <h2 class="logo">2Fast2Clean</h2>
+      </div>
+
+      <div class="menu">
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="services.html">SERVICES</a></li>
+          <li><a href="booking.html">BOOK</a></li>
+          <li><a href="admin.html">ADMIN</a></li>
+          <li><a href="about.html">ABOUT</a></li>
+        </ul>
+      </div>
+
+      <div class="search">
+        <input class="srch" name="" placeholder="Type to search">
+        <button class="btn">Search</button>
+      </div>
+    </div>
+
+    <!-- SIMPLE HERO TITLE -->
+    <div class="content">
+      <div class="hero-copy">
+        <h1>Checkout <span>&amp; Payment</span></h1>
+        <p class="par">
+          Review your booking, choose how you’d like to pay, and confirm your wash at
+          <strong>2Fast2Clean – Centurion, Pretoria</strong>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CHECKOUT SECTION -->
+  <section class="section section-dark">
+    <div class="section-inner">
+      <h2 class="section-title">Payment options</h2>
+      <p class="section-subtitle">
+        All prices are in <strong>South African Rand (ZAR)</strong>.  
+        Choose your preferred payment method below.
+      </p>
+
+      <div id="checkoutError" class="booking-message" style="color:#f87171; display:none;"></div>
+
+      <div class="checkout-grid">
+        <!-- LEFT: BOOKING SUMMARY -->
+        <div class="summary-card">
+          <h3>Booking summary</h3>
+          <p class="summary-line"><span>Customer:</span> <span id="summaryName">—</span></p>
+          <p class="summary-line"><span>Service:</span> <span id="summaryService">—</span></p>
+          <p class="summary-line"><span>Date:</span> <span id="summaryDay">—</span></p>
+          <p class="summary-line"><span>Time:</span> <span id="summaryTime">—</span></p>
+          <p class="summary-line"><span>Payment status:</span> <span id="summaryStatus">UNPAID</span></p>
+          <p class="summary-total">
+            <span>Total:</span>
+            <span id="summaryAmount">R 0.00</span>
+          </p>
+          <p class="note small">
+            2Fast2Clean mainly operates from <strong>Centurion, Pretoria</strong>.
+            Please arrive 5–10 minutes before your slot.
+          </p>
+        </div>
+
+        <!-- RIGHT: PAYMENT METHODS -->
+        <div class="booking-form">
+          <h3>Choose how you’d like to pay</h3>
+
+          <div class="pill-options" id="paymentMethodGroup">
+            <button type="button" data-method="pay_in_person" class="pill-option active">
+              Pay in person (on arrival)
+            </button>
+            <button type="button" data-method="card_online" class="pill-option">
+              Card payment (Visa / Mastercard)
+            </button>
+            <button type="button" data-method="payfast" class="pill-option">
+              Pay via PayFast
+            </button>
+            <button type="button" data-method="yoco" class="pill-option">
+              Pay via Yoco
+            </button>
+          </div>
+
+          <!-- CARD DETAILS (only shown when "card_online" selected) -->
+          <div id="cardDetails" class="card-details" style="display:none; margin-top:16px;">
+            <label for="cardName">Name on card</label>
+            <input id="cardName" type="text" placeholder="e.g. T Mokoena">
+
+            <label for="cardNumber">Card number</label>
+            <input id="cardNumber" type="text" placeholder="**** **** **** ****" maxlength="19">
+
+            <div class="card-row">
+              <div>
+                <label for="cardExpiry">Expiry (MM/YY)</label>
+                <input id="cardExpiry" type="text" placeholder="09/28" maxlength="5">
+              </div>
+              <div>
+                <label for="cardCvc">CVC</label>
+                <input id="cardCvc" type="password" placeholder="***" maxlength="4">
+              </div>
+            </div>
+            <p class="note small">
+              This is a <strong>demo checkout</strong>. Do not enter real card details.
+            </p>
+          </div>
+
+          <!-- INFO FOR PAYFAST / YOCO -->
+          <div id="gatewayInfo" style="display:none; margin-top:16px;">
+            <p class="note small">
+              For PayFast and Yoco, 2Fast2Clean will send you a secure payment link after confirming your booking.
+              This checkout simply records your preferred method.
+            </p>
+            <p class="note small">
+              Learn more:
+              <a href="https://www.payfast.co.za/" target="_blank" rel="noopener noreferrer">PayFast</a> ·
+              <a href="https://www.yoco.com/" target="_blank" rel="noopener noreferrer">Yoco</a>
+            </p>
+          </div>
+
+          <button id="payNowBtn" class="btnn wide" style="margin-top:20px;">
+            Confirm payment
+          </button>
+
+          <p class="booking-message" id="checkoutMessage" style="display:none;"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    © <span id="year"></span> 2Fast2Clean • Centurion, Pretoria • All rights reserved
+  </footer>
+
+  <!-- CONFIG (API_BASE_URL) -->
+  <script src="config.js"></script>
+
+  <script>
+    // Year in footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const API_BASE_URL = window.API_BASE_URL || "http://localhost:4000";
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const bookingId = urlParams.get("bookingId");
+
+    const summaryName   = document.getElementById("summaryName");
+    const summaryService= document.getElementById("summaryService");
+    const summaryDay    = document.getElementById("summaryDay");
+    const summaryTime   = document.getElementById("summaryTime");
+    const summaryAmount = document.getElementById("summaryAmount");
+    const summaryStatus = document.getElementById("summaryStatus");
+    const checkoutError = document.getElementById("checkoutError");
+    const checkoutMsg   = document.getElementById("checkoutMessage");
+
+    const methodGroup   = document.getElementById("paymentMethodGroup");
+    const cardDetails   = document.getElementById("cardDetails");
+    const gatewayInfo   = document.getElementById("gatewayInfo");
+    const payNowBtn     = document.getElementById("payNowBtn");
+
+    let currentMethod = "pay_in_person";
+    let currentBooking = null;
+
+    if (!bookingId) {
+      checkoutError.style.display = "block";
+      checkoutError.textContent = "No booking selected. Please go back to the booking page.";
+    } else {
+      loadBooking(bookingId);
+    }
+
+    async function loadBooking(id) {
+      try {
+        const res = await fetch(\`\${API_BASE_URL}/api/bookings/\${id}\`);
+        if (!res.ok) {
+          checkoutError.style.display = "block";
+          checkoutError.textContent = "Booking not found. Please go back and try again.";
+          return;
+        }
+        const data = await res.json();
+        const booking = data.booking;
+        currentBooking = booking;
+
+        summaryName.textContent    = booking.customer_name || "—";
+        summaryService.textContent = booking.service_name || booking.service_code || "—";
+        summaryDay.textContent     = booking.day || "—";
+        summaryTime.textContent    = booking.time || "—";
+        summaryAmount.textContent  = "R " + (booking.amount_cents / 100).toFixed(2);
+        summaryStatus.textContent  = booking.payment_status || "UNPAID";
+      } catch (err) {
+        console.error(err);
+        checkoutError.style.display = "block";
+        checkoutError.textContent = "Error loading booking. Please refresh or contact support.";
+      }
+    }
+
+    // Payment method button handling
+    methodGroup.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-method]");
+      if (!btn) return;
+
+      // Set active style
+      [...methodGroup.querySelectorAll("button[data-method]")].forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      currentMethod = btn.dataset.method;
+
+      // Show/hide extra fields
+      if (currentMethod === "card_online") {
+        cardDetails.style.display = "block";
+        gatewayInfo.style.display = "none";
+      } else if (currentMethod === "payfast" || currentMethod === "yoco") {
+        cardDetails.style.display = "none";
+        gatewayInfo.style.display = "block";
+      } else {
+        cardDetails.style.display = "none";
+        gatewayInfo.style.display = "none";
+      }
+    });
+
+    function validateCardFields() {
+      const name = document.getElementById("cardName").value.trim();
+      const num  = document.getElementById("cardNumber").value.replace(/\s+/g, "");
+      const exp  = document.getElementById("cardExpiry").value.trim();
+      const cvc  = document.getElementById("cardCvc").value.trim();
+
+      if (!name || !num || !exp || !cvc) {
+        return "Please fill in all card details.";
+      }
+      if (num.length < 12) {
+        return "Card number looks too short.";
+      }
+      return null;
+    }
+
+    async function handlePayNow() {
+      checkoutError.style.display = "none";
+      checkoutMsg.style.display = "none";
+      checkoutMsg.textContent = "";
+
+      if (!currentBooking) {
+        checkoutError.style.display = "block";
+        checkoutError.textContent = "Booking not loaded. Please refresh the page.";
+        return;
+      }
+
+      let cardLast4 = null;
+
+      if (currentMethod === "card_online") {
+        const err = validateCardFields();
+        if (err) {
+          checkoutError.style.display = "block";
+          checkoutError.textContent = err;
+          return;
+        }
+        const num = document.getElementById("cardNumber").value.replace(/\s+/g, "");
+        cardLast4 = num.slice(-4);
+      }
+
+      try {
+        payNowBtn.disabled = true;
+        payNowBtn.textContent = "Processing…";
+
+        const res = await fetch(\`\${API_BASE_URL}/api/pay\`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            booking_id: currentBooking.id,
+            method: currentMethod,
+            amount_cents: currentBooking.amount_cents,
+            card_last4: cardLast4
+          })
+        });
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || "Payment failed. Please try again.");
+        }
+
+        // On success, redirect to success page
+        window.location.href = \`payment-success.html?bookingId=\${currentBooking.id}\`;
+      } catch (err) {
+        console.error(err);
+        checkoutError.style.display = "block";
+        checkoutError.textContent = err.message;
+      } finally {
+        payNowBtn.disabled = false;
+        payNowBtn.textContent = "Confirm payment";
+      }
+    }
+
+    payNowBtn.addEventListener("click", handlePayNow);
+  </script>
+</body>
+</html>

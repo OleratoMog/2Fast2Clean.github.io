@@ -1,97 +1,153 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
+  <title>Services — 2Fast2Clean</title>
+  <link rel="stylesheet" href="style.css">
   <meta charset="utf-8" />
-  <title>Services — 2Fast 2Clean</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
-  <header class="site-header glass">
-    <a class="brand" href="index.html">
-      <img src="assets/logo.svg" alt="2Fast 2Clean logo" width="36" height="36">
-      <span>2Fast 2Clean</span>
-    </a>
-    <nav class="nav">
-      <a href="index.html">Home</a>
-      <a href="services.html" class="active">Services</a>
-      <a href="booking.html">Book</a>
-      <a href="admin.html">Admin</a>
-      <button id="themeToggle" class="btn small" aria-label="Toggle theme">🌗</button>
-    </nav>
-  </header>
+  <div class="main services-page">
+    <div class="navbar">
+      <div class="icon">
+        <h2 class="logo">2Fast2Clean</h2>
+      </div>
 
-  <main class="container">
-    <section>
-      <h1>Our Services</h1>
-      <p class="lead">Clear packages with predictable durations and great results. Choose what fits your time and budget.</p>
-    </section>
-
-    <section class="grid three">
-      <article class="card price lift">
-        <h3>Express Wash</h3>
-        <p class="big">R 80</p>
-        <ul class="bullets">
-          <li>Exterior rinse &amp; dry</li>
-          <li>Tyre shine</li>
-          <li>~30 minutes</li>
+      <div class="menu">
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="services.html">SERVICES</a></li>
+          <li><a href="booking.html">BOOK</a></li>
+          <li><a href="admin.html">ADMIN</a></li>
+          <li><a href="about.html">ABOUT</a></li>
         </ul>
-        <a class="btn gold" href="booking.html?svc=express">Book Express</a>
-      </article>
+      </div>
 
-      <article class="card price lift">
-        <h3>Standard Wash</h3>
-        <p class="big">R 120</p>
-        <ul class="bullets">
-          <li>Exterior + vacuum</li>
-          <li>Windows inside &amp; out</li>
-          <li>~45 minutes</li>
-        </ul>
-        <a class="btn gold" href="booking.html?svc=standard">Book Standard</a>
-      </article>
-
-      <article class="card price lift">
-        <h3>Premium Detail</h3>
-        <p class="big">R 250</p>
-        <ul class="bullets">
-          <li>Full interior &amp; exterior detail</li>
-          <li>Wax &amp; protection</li>
-          <li>~90 minutes</li>
-        </ul>
-        <a class="btn gold" href="booking.html?svc=premium">Book Premium</a>
-      </article>
-    </section>
-
-    <section class="info-grid">
-      <article class="card lift">
-        <h3>Opening hours</h3>
-        <p>Mon–Sat: 08:00–17:00 • Sun: 09:00–15:00</p>
-      </article>
-      <article class="card lift">
-        <h3>Location</h3>
-        <p>Ormonde • Gold Reef Road • Johannesburg</p>
-      </article>
-      <article class="card lift">
-        <h3>Payments</h3>
-        <p>Online PayFast • Onsite card/EFT/wallet</p>
-      </article>
-    </section>
-
-    <div class="cta-bar">
-      <div class="container cta-bar-inner">
-        <h3>Skip the queue — book a time!</h3>
-        <a class="btn primary" href="booking.html">Book now</a>
+      <div class="search">
+        <input class="srch" name="" placeholder="Search services">
+        <button class="btn" type="button" onclick="window.location.href='services.html'">Search</button>
       </div>
     </div>
-  </main>
 
-  <footer class="site-footer">
-    <p>© <span id="year"></span> 2Fast 2Clean • Johannesburg</p>
-  </footer>
+    <div class="content services-content">
+      <h1>Our <span>Services</span></h1>
+      <p class="par">
+   
+All prices are listed in South African Rand (ZAR). Simply choose the package that suits your budget and vehicle,<br>
+then proceed to checkout to confirm your booking. 2Fast2Clean currently operates primarily in Centurion, Pretoria,<br>
+serving drivers in the greater Tshwane area with fast, reliable and professional car care.<br>
+<br>
 
-  <script src="assets/config.js"></script>
-  <script src="assets/app.js"></script>
+<b>Express Wash — “In & out clean”</b><br>
+
+<b>What it is:</b>
+A fast, high-quality exterior clean for drivers who just want their car to look fresh without spending a lot of time.
+
+<b>What we do:</b>
+
+Pre-rinse to remove loose dust and road dirt
+
+Snow-foam pre-wash to gently lift grime
+
+High-pressure rinse for body and wheels
+
+Hand wash with pH-balanced shampoo
+
+Rinse and microfibre hand-dry to prevent water spots
+
+Tyre and wheel face clean with light tyre shine<br>
+
+<b>Best for:
+Weekly/bi-weekly maintenance washes, company cars or anyone who wants a clean, shiny vehicle in about 25–30 minutes.</b><br>
+
+<br>
+<b>Standard Wash — “Inside & out refresh”</b><br>
+
+<b>What it is:</b>
+A balanced interior + exterior clean for everyday use. You drive away with a car that looks good from the outside and feels fresh inside.
+
+<b>What we do (includes everything from Express Wash, plus):</b><br>
+
+Full interior vacuum (seats, carpets, boot area)
+
+Floor mats removed, cleaned and refitted
+
+Windows cleaned inside and out for better visibility
+
+Dash, centre console and door panels lightly wiped and dusted
+
+Door jambs and entrance sills wiped down<br>
+
+<b>Best for:
+Families, ride-share drivers, or anyone who spends time in the car and wants it to feel clean and tidy. Average time: 35–45 minutes depending on vehicle size.</b><br>
+<br>
+<b>Premium Detail — “Showroom treatment”</b><br>
+
+<b>What it is:</b>
+A deep-clean and detailing service that restores your car’s look and feel, inside and out. This is more than a wash — it’s a full detail.
+
+<b>What we do (includes everything from Standard Wash, plus):</b>
+
+<b>Interior:</b><br>
+
+Deep vacuum of seats, carpets, boot and hard-to-reach areas
+
+Carpet & fabric spot cleaning (light stains)
+
+Leather cleaned and conditioned (if applicable)
+
+Plastics, trims and vents carefully cleaned and dressed
+
+Interior deodorising for a fresher cabin<br>
+
+<b>Exterior:</b><br>
+
+Bug and tar removal from front bumper and lower panels
+
+Hand clean of door jambs, fuel flap and other hidden areas
+
+Light paint decontamination to remove bonded grime
+
+Hand-applied wax or sealant for added gloss and protection
+
+Extra attention to wheels and tyres for a sharp finish<br>
+
+<b>Best for:</b>
+Selling your car, special occasions, or every few months to keep your vehicle in top condition. Plan for about 90–120 minutes, depending on the condition and size of the vehicle.
+      </p>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Express Wash</h3>
+          <p class="price-tag">R80</p>
+          <p>Exterior wash, rinse &amp; dry • 30 minutes</p>
+          <button class="cn" type="button" onclick="window.location.href='booking.html?svc=express'">
+            <a>Book Express</a>
+          </button>
+        </div>
+
+        <div class="service-card">
+          <h3>Standard Wash</h3>
+          <p class="price-tag">R120</p>
+          <p>Exterior,interior + vacuum • 45 minutes</p>
+          <button class="cn" type="button" onclick="window.location.href='booking.html?svc=standard'">
+            <a>Book Standard</a>
+          </button>
+        </div>
+
+        <div class="service-card">
+          <h3>Premium Detail</h3>
+          <p class="price-tag">R250</p>
+          <p>Full interior, wax coat &amp; exterior detail • 90 minutes</p>
+          <button class="cn" type="button" onclick="window.location.href='booking.html?svc=premium'">
+            <a>Book Premium</a>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

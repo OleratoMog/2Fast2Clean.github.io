@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Payment Successful — 2Fast2Clean</title>
+  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body data-page="success">
+  <div class="main">
+    <div class="navbar">
+      <div class="icon">
+        <h2 class="logo">2Fast2Clean</h2>
+      </div>
+
+      <div class="menu">
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="services.html">SERVICES</a></li>
+          <li><a href="booking.html">BOOK</a></li>
+          <li><a href="admin.html">ADMIN</a></li>
+          <li><a href="about.html">ABOUT</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content slim success-content">
+      <div class="tick-circle">
+        <span>✓</span>
+      </div>
+      <h1>Payment <span>successful</span></h1>
+      <p id="successText" class="par">
+        Your booking has been confirmed and payment recorded.
+      </p>
+
+      <button class="cn" type="button" onclick="window.location.href='index.html'">
+        <a>Back to Home</a>
+      </button>
+      <button class="cn" type="button" onclick="window.location.href='admin.html'">
+        <a>View Bookings</a>
+      </button>
+    </div>
+  </div>
+  
+  <div id="successMessage"></div>
+<div id="successBooking"></div>
+
+	
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

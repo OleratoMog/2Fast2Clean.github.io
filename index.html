@@ -62,22 +62,46 @@
         </div>
       </div>
 
-      <!-- Admin login panel (demo only, no real backend yet) -->
-      <div class="form" id="admin-login">
-        <h2>Admin Login</h2>
-        <input type="email" name="email" placeholder="Enter Email">
-        <input type="password" name="password" placeholder="Enter Password">
-        <button class="btnn">Login</button>
+      
+      
+	  <div class="form" id="loginFormBox">
+  <h2>Login</h2>
 
-        <p class="link">Don’t have access?<br><a href="#admin">View admin info</a></p>
-        <p class="liw">Follow us</p>
+  <input
+    type="email"
+    id="loginEmail"
+    name="email"
+    placeholder="Email address"
+  >
 
-        <div class="social-icons">
-          <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
-          <a href="#"><ion-icon name="logo-instagram"></ion-icon></a>
-          <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
-          <a href="#"><ion-icon name="logo-google"></ion-icon></a>
-        </div>
+  <input
+    type="password"
+    id="loginPassword"
+    name="password"
+    placeholder="Password"
+  >
+
+  <button class="btnn" id="loginBtn">Login</button>
+
+  <p class="link">
+    
+    <strong>admin@2fast2clean.co.za</strong> / <strong>admin123</strong>
+  </p>
+
+  <p class="liw">Or log in with</p>
+
+  <div class="social-icons">
+    <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
+    <a href="#"><ion-icon name="logo-instagram"></ion-icon></a>
+    <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
+    <a href="#"><ion-icon name="logo-google"></ion-icon></a>
+    <a href="#"><ion-icon name="logo-skype"></ion-icon></a>
+  </div>
+
+  <!-- Message area for errors / success -->
+  <p id="loginMessage" class="login-message"></p>
+</div>
+
       </div>
     </div>
   </div>
@@ -143,37 +167,71 @@
           </p>
         </div>
 
-        <div class="booking-form">
-          <h3>Quick Booking (Demo)</h3>
-          <label>
-            Name
-            <input type="text" placeholder="e.g. Thabo Mokoena">
-          </label>
-          <label>
-            Phone (+27)
-            <input type="tel" placeholder="+27 82 123 4567">
-          </label>
-          <label>
-            Service
-            <select>
-              <option>Express Wash — R 80</option>
-              <option>Standard Wash — R 120</option>
-              <option>Premium Detail — R 250</option>
-            </select>
-          </label>
-          <label>
-            Preferred Date
-            <input type="date">
-          </label>
-          <label>
-            Preferred Time
-            <input type="time">
-          </label>
-          <button class="btnn wide">Request Booking</button>
-          <p class="note small">This is a front-end demo only. To make it live, you’d connect this form to a real backend.</p>
-        </div>
+        <!-- QUICK BOOKING SECTION -->
+<div class="section section-light" id="quick-booking">
+  <div class="section-inner">
+    <h2 class="section-title">Quick Booking</h2>
+    <p class="section-subtitle">
+      Book a wash at <strong>2Fast2Clean Centurion / Pretoria</strong> in under a minute.
+      Choose your package in <strong>ZAR</strong>, pick a time, and we’ll pre-fill the rest for you.
+    </p>
+
+    <div class="booking-layout">
+      <!-- LEFT: How it works -->
+      <div class="booking-steps">
+        <h3>How Quick Booking works</h3>
+        <ol>
+          <li>Select your wash package and preferred date & time.</li>
+          <li>Enter your name and phone number (+27).</li>
+          <li>We send you to the full booking page already filled in.</li>
+          <li>Confirm your details and choose how you’d like to pay.</li>
+        </ol>
+        <p class="note">
+          This is perfect if you just want to **jump straight into a Premium, Standard or Express wash**
+          without hunting around the site.
+        </p>
+      </div>
+
+      <!--Quick Booking form -->
+      <div class="booking-form">
+        <h3>Quick Booking</h3>
+        <form id="quickBookingForm">
+          <label for="qbService">Service</label>
+          <select id="qbService" required>
+            <option value="">Select a wash package</option>
+            <option value="express">Express Wash — R80</option>
+            <option value="standard">Standard Wash — R120</option>
+            <option value="premium">Premium Detail — R250</option>
+          </select>
+
+          <label for="qbDate">Preferred date</label>
+          <input type="date" id="qbDate" required>
+
+          <label for="qbTime">Preferred time</label>
+          <input type="time" id="qbTime" required>
+
+          <label for="qbName">Full name</label>
+          <input type="text" id="qbName" placeholder="e.g. Thabo Mokoena" required>
+
+          <label for="qbPhone">Mobile (+27…)</label>
+          <input type="tel" id="qbPhone" placeholder="+27…" required>
+
+          <button type="submit" class="btnn wide" style="margin-top: 18px;">
+            Continue to full booking
+          </button>
+
+          <p class="booking-message" id="qbMessage"></p>
+        </form>
+
+        <p class="note small">
+          All bookings are handled in <strong>South African Rand (ZAR)</strong>.  
+          2Fast2Clean mainly operates from <strong>Centurion, Pretoria</strong>.
+        </p>
       </div>
     </div>
+  </div>
+</div>
+
   </section>
 
   <!-- ADMIN SECTION -->
@@ -234,6 +292,48 @@
   <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 
   <!-- MAIN SITE SCRIPT -->
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const loginBtn  = document.getElementById("loginBtn");
+    const emailEl   = document.getElementById("loginEmail");
+    const passEl    = document.getElementById("loginPassword");
+    const msgEl     = document.getElementById("loginMessage");
+
+    if (!loginBtn) return; // safety
+
+    loginBtn.addEventListener("click", function (e) {
+      e.preventDefault(); // stop any default link/button behaviour
+
+      const email = (emailEl.value || "").trim();
+      const pass  = passEl.value || "";
+
+      msgEl.textContent = "";
+      msgEl.className = "login-message";
+
+      if (!email || !pass) {
+        msgEl.textContent = "Please enter both your email and password.";
+        msgEl.classList.add("error");
+        return;
+      }
+
+      // demo login: admin@2fast2clean.co.za / admin123
+      if (email === "admin@2fast2clean.co.za" && pass === "admin123") {
+        msgEl.textContent = "Login successful. Redirecting to admin dashboard…";
+        msgEl.classList.add("success");
+
+        // Redirect to admin page after a short pause
+        setTimeout(function () {
+          window.location.href = "admin.html";
+        }, 800);
+      } else {
+        msgEl.textContent = "Invalid email or password. Try the demo admin login shown above.";
+        msgEl.classList.add("error");
+      }
+    });
+  });
+</script>
+
+  <script src="config.js"></script>
   <script src="main.js"></script>
 </body>
 </html>

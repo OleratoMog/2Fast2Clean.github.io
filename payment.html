@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Payment — 2Fast2Clean</title>
+  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body data-page="payment">
+  <div class="main">
+    <div class="navbar">
+      <div class="icon">
+        <h2 class="logo">2Fast2Clean</h2>
+      </div>
+
+      <div class="menu">
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="services.html">SERVICES</a></li>
+          <li><a href="booking.html">BOOK</a></li>
+          <li><a href="admin.html">ADMIN</a></li>
+          <li><a href="about.html">ABOUT</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content slim">
+      <h1>Secure <span>Payment</span></h1>
+      <p class="par" id="paymentIntro">
+        Review your booking and choose how you’d like to pay.
+      </p>
+
+      <div class="payment-summary">
+        <h2>Booking summary</h2>
+        <p><strong>Booking ID:</strong> <span id="payBookingId">-</span></p>
+        <p><strong>Service:</strong> <span id="payService">-</span></p>
+        <p><strong>Date &amp; time:</strong> <span id="payDateTime">-</span></p>
+        <p><strong>Amount:</strong> <span id="payAmount">R0</span></p>
+      </div>
+
+      <div class="payment-card">
+        <h2>Choose payment method</h2>
+
+        <label class="radio-row">
+          <input type="radio" name="payMethod" value="pay_on_arrival">
+          Pay in person at the wash (cash / card on site)
+        </label>
+
+        <label class="radio-row">
+          <input type="radio" name="payMethod" value="card">
+          Credit / Debit card (Visa / Mastercard)
+        </label>
+
+        <div id="cardDetails" class="card-details">
+          <label>Name on card</label>
+          <input type="text" id="cardName" placeholder="As shown on card">
+
+          <label>Card number</label>
+          <input type="text" id="cardNumber" placeholder="1111 2222 3333 4444">
+
+          <div class="card-row">
+            <div>
+              <label>Expiry (MM/YY)</label>
+              <input type="text" id="cardExpiry" placeholder="08/28">
+            </div>
+            <div>
+              <label>CVV</label>
+              <input type="password" id="cardCvv" placeholder="123">
+            </div>
+          </div>
+        </div>
+
+        <label class="radio-row">
+          <input type="radio" name="payMethod" value="payfast">
+          Pay via PayFast
+        </label>
+
+        <label class="radio-row">
+          <input type="radio" name="payMethod" value="yoco">
+          Pay via Yoco
+        </label>
+
+        <button class="btnn" type="button" id="payNowBtn">
+          <a>Pay Now</a>
+        </button>
+
+        <p id="paymentMessage" class="par msg"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
