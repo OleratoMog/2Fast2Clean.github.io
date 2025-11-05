@@ -9,4 +9,5 @@ If you see a black-and-white page, it means `assets/styles.css` didn’t load. E
 ## Run locally
 Open `index.html` directly, or:
 ```bash
-python3 -m http.server 8000
+python3 -m http.server 5500
+
