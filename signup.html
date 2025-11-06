@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Sign Up – 2Fast2Clean</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="main">
+    <div class="overlay"></div>
+
+    <div class="navbar">
+      <div class="icon">
+        <h2 class="logo">2Fast2Clean</h2>
+      </div>
+
+      <div class="menu">
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="services.html">SERVICES</a></li>
+          <li><a href="booking.html">BOOK</a></li>
+          <li><a href="admin.html">ADMIN</a></li>
+          <li><a href="about.html">ABOUT</a></li>
+        </ul>
+      </div>
+
+      <div class="search">
+        <input class="srch" name="" placeholder="Type To Text">
+        <button class="btn">Search</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="hero-copy">
+        <h1>Create your <span>2Fast2Clean</span> account</h1>
+        <p class="par">
+          Sign up once and use the same email and password every time you log in
+          to book washes, manage your bookings and access future features.
+        </p>
+
+        <div class="hero-tags">
+          <span>Pretoria • Centurion</span>
+          <span>ZAR pricing</span>
+          <span>Mobile-first</span>
+        </div>
+      </div>
+
+      <!-- Sign up box -->
+      <div class="form" id="signupFormBox">
+        <h2>Sign Up</h2>
+
+        <input
+          type="text"
+          id="signupName"
+          name="name"
+          placeholder="Full name"
+        >
+
+        <input
+          type="email"
+          id="signupEmail"
+          name="email"
+          placeholder="Email address"
+        >
+
+        <input
+          type="password"
+          id="signupPassword"
+          name="password"
+          placeholder="Password"
+        >
+
+        <input
+          type="password"
+          id="signupPassword2"
+          name="password2"
+          placeholder="Confirm password"
+        >
+
+        <button class="btnn" id="signupBtn">Sign Up</button>
+
+        <p class="link">
+          Already have an account?
+          <a href="index.html">Back to login</a>
+        </p>
+
+        <!-- Message area for errors / success -->
+        <p id="signupMessage" class="login-message"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+</body>
+</html>

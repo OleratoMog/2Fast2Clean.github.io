@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <title>2Fast 2Clean — Pretoria Premium Car Wash</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Book your car wash at 2Fast 2Clean Pretoria in under a minute. Mobile-first bookings, secure payment options, and guaranteed time slots." />
   
   <!-- Google Font -->
@@ -64,7 +64,7 @@
 
       
       
-	  <div class="form" id="loginFormBox">
+	 <div class="form" id="loginFormBox">
   <h2>Login</h2>
 
   <input
@@ -83,8 +83,14 @@
 
   <button class="btnn" id="loginBtn">Login</button>
 
+  <!-- NEW: Sign up link (before admin hint) -->
   <p class="link">
-    
+    Don't have an account?
+    <a href="signup.html">Sign up</a>
+  </p>
+
+  <!-- Existing admin credentials hint (unchanged) -->
+  <p class="link">
     <strong>admin@2fast2clean.co.za</strong> / <strong>admin123</strong>
   </p>
 
@@ -105,6 +111,7 @@
       </div>
     </div>
   </div>
+
 
   <!-- SERVICES SECTION -->
   <section id="services" class="section section-dark">
@@ -335,6 +342,10 @@
 
   <script src="config.js"></script>
   <script src="main.js"></script>
+  
+  <script src="app.js"></script>
+<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+
 </body>
 </html>
 

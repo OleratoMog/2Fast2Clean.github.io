@@ -4,11 +4,10 @@
   <title>Admin | 2Fast2Clean</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="admin">
   <div class="main">
     <div class="overlay"></div>
 
-    <!-- NAVBAR (same look as home) -->
     <div class="navbar">
       <div class="icon">
         <h2 class="logo">2Fast2Clean</h2>
@@ -25,225 +24,95 @@
       </div>
 
       <div class="search">
-        <input class="srch" name="" placeholder="Search bookings...">
-        <button class="btn" id="adminSearchBtn">Search</button>
+        <input class="srch" placeholder="Type To Text">
+        <button class="btn">Search</button>
       </div>
     </div>
 
-    <!-- ADMIN CONTENT -->
     <div class="section section-dark">
-      <div class="section-inner admin-layout">
+      <div class="section-inner">
         <h1 class="section-title">Admin Dashboard</h1>
         <p class="section-subtitle">
-          View and manage bookings for <strong>2Fast2Clean</strong> Centurion / Pretoria.
-          <br>
-          This dashboard reads bookings stored in this browser (localStorage).
+          View all 2Fast2Clean bookings in one place — who booked, which service,
+          and when their slot is scheduled.
         </p>
 
-        <!-- Filters / controls -->
-        <div class="card admin-controls">
-          <h3>Bookings overview</h3>
-          <p class="note small">
-            Use the filters to view bookings by status. Click actions to update a booking.
+        <!-- ADMIN LOGIN BOX -->
+        <div class="form" id="adminLoginBox">
+          <h2>Admin Login</h2>
+
+          <input
+            type="email"
+            id="adminEmail"
+            placeholder="Admin email"
+          >
+
+          <input
+            type="password"
+            id="adminPassword"
+            placeholder="Admin password"
+          >
+
+          <button class="btnn" id="adminLoginBtn">Login</button>
+
+          <p class="link">
+            Use: <strong>admin@2fast2clean.co.za</strong> / <strong>admin123</strong>
           </p>
-          <div class="admin-filters">
-            <label>
-              Status:
-              <select id="statusFilter">
-                <option value="all">All</option>
-                <option value="PENDING">Pending</option>
-                <option value="CONFIRMED">Confirmed</option>
-                <option value="COMPLETED">Completed</option>
-                <option value="CANCELLED">Cancelled</option>
-              </select>
-            </label>
-            <button class="btn" id="refreshBookings">Refresh</button>
-          </div>
+
+          <p id="adminMessage" class="booking-message"></p>
         </div>
 
-        <!-- Table -->
-        <div class="card admin-table-card">
-          <div class="admin-table-wrap">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Customer</th>
-                  <th>Service</th>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th>Status</th>
-                  <th>Payment</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="bookingsTableBody">
-                <!-- rows injected by JS -->
-              </tbody>
-            </table>
-          </div>
-          <p id="noBookingsMsg" class="note small" style="display:none;">
-            No bookings found. Create a booking from the main site first.
+        <!-- BOOKINGS TABLE (HIDDEN UNTIL ADMIN LOGS IN) -->
+        <div id="adminTableSection" style="display:none; margin-top:24px;">
+          <h2 class="section-title" style="text-align:left; margin-bottom:12px;">
+            All bookings
+          </h2>
+          <p class="section-subtitle" style="text-align:left;">
+            Below you can see who booked what, for which day and time, along with
+            current status and payment method.
           </p>
+
+          <div class="booking-form">
+            <div style="overflow-x:auto;">
+              <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                <thead>
+                  <tr>
+                    <th style="text-align:left; padding:8px;">ID</th>
+                    <th style="text-align:left; padding:8px;">Customer</th>
+                    <th style="text-align:left; padding:8px;">Email</th>
+                    <th style="text-align:left; padding:8px;">Phone</th>
+                    <th style="text-align:left; padding:8px;">Service</th>
+                    <th style="text-align:left; padding:8px;">Date</th>
+                    <th style="text-align:left; padding:8px;">Time</th>
+                    <th style="text-align:left; padding:8px;">Status</th>
+                    <th style="text-align:left; padding:8px;">Payment</th>
+                  </tr>
+                </thead>
+                <tbody id="bookingsTableBody">
+                  <!-- rows injected by app.js -->
+                </tbody>
+              </table>
+            </div>
+            <p class="note small">
+              Bookings are stored in this browser’s local storage for demo purposes.
+              In a production system this would come from a database / API.
+            </p>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="footer">
-      © 2025 2Fast2Clean • Admin Dashboard
+      © <span id="yearSpan"></span> 2Fast2Clean • Pretoria / Centurion
     </div>
   </div>
 
-  <!-- Ionicons (if you want icons on buttons later) -->
+  <script src="app.js"></script>
   <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
-
-  <!-- Admin Dashboard Logic -->
   <script>
-    // Try to read bookings from localStorage.
-    function loadBookings() {
-      try {
-        const raw =
-          localStorage.getItem("2f2c_bookings") ||
-          localStorage.getItem("bookings");
-        if (!raw) return [];
-        const parsed = JSON.parse(raw);
-        return Array.isArray(parsed) ? parsed : [];
-      } catch (e) {
-        console.error("Error parsing bookings:", e);
-        return [];
-      }
-    }
-
-    function saveBookings(rows) {
-      localStorage.setItem("2f2c_bookings", JSON.stringify(rows));
-      // optional: keep old key in sync
-      localStorage.setItem("bookings", JSON.stringify(rows));
-    }
-
-    // Render table rows
-    function renderBookings() {
-      const tbody = document.getElementById("bookingsTableBody");
-      const noMsg = document.getElementById("noBookingsMsg");
-      const statusFilter = document.getElementById("statusFilter");
-
-      const all = loadBookings();
-      const status = statusFilter.value;
-
-      let rows = all;
-      if (status !== "all") {
-        rows = all.filter(b => (b.status || "PENDING") === status);
-      }
-
-      tbody.innerHTML = "";
-
-      if (!rows.length) {
-        noMsg.style.display = "block";
-        return;
-      } else {
-        noMsg.style.display = "none";
-      }
-
-      rows
-        .sort((a, b) => {
-          const aKey = (a.day || "") + (a.time || "");
-          const bKey = (b.day || "") + (b.time || "");
-          return aKey.localeCompare(bKey);
-        })
-        .forEach(b => {
-          const tr = document.createElement("tr");
-
-          const id = b.id ?? "-";
-          const name = b.customer_name || "Unknown";
-          const service = b.service_name || b.service || b.service_code || "-";
-          const day = b.day || b.date || "-";
-          const time = b.time || "-";
-          const statusText = b.status || "PENDING";
-          const payStatus = b.payment_status || "UNPAID";
-
-          tr.innerHTML = `
-            <td>${id}</td>
-            <td>
-              <div class="admin-customer">
-                <div class="admin-customer-name">${name}</div>
-                ${
-                  b.customer_phone
-                    ? `<div class="admin-customer-meta">${b.customer_phone}</div>`
-                    : ""
-                }
-                ${
-                  b.customer_email
-                    ? `<div class="admin-customer-meta">${b.customer_email}</div>`
-                    : ""
-                }
-              </div>
-            </td>
-            <td>${service}</td>
-            <td>${day}</td>
-            <td>${time}</td>
-            <td>
-              <span class="badge badge-status-${statusText.toLowerCase()}">
-                ${statusText}
-              </span>
-            </td>
-            <td>
-              <span class="badge badge-pay-${payStatus.toLowerCase()}">
-                ${payStatus}
-              </span>
-            </td>
-            <td class="admin-actions-cell">
-              <button class="btn admin-action-btn" data-action="confirm" data-id="${id}">Confirm</button>
-              <button class="btn admin-action-btn" data-action="complete" data-id="${id}">Complete</button>
-              <button class="btn admin-action-btn" data-action="cancel" data-id="${id}">Cancel</button>
-            </td>
-          `;
-          tbody.appendChild(tr);
-        });
-    }
-
-    // Handle action buttons (Confirm / Complete / Cancel)
-    function wireActions() {
-      document.addEventListener("click", function (e) {
-        const btn = e.target.closest(".admin-action-btn");
-        if (!btn) return;
-
-        const id = Number(btn.dataset.id);
-        const action = btn.dataset.action;
-        if (!id || !action) return;
-
-        let rows = loadBookings();
-        const idx = rows.findIndex(r => Number(r.id) === id);
-        if (idx === -1) {
-          alert("Booking not found in storage.");
-          return;
-        }
-
-        const row = rows[idx];
-
-        if (action === "confirm") {
-          row.status = "CONFIRMED";
-          row.payment_status = row.payment_status || "PAID";
-        } else if (action === "complete") {
-          row.status = "COMPLETED";
-        } else if (action === "cancel") {
-          row.status = "CANCELLED";
-        }
-
-        rows[idx] = row;
-        saveBookings(rows);
-        renderBookings();
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-      const statusFilter = document.getElementById("statusFilter");
-      const refreshBtn = document.getElementById("refreshBookings");
-
-      statusFilter.addEventListener("change", renderBookings);
-      refreshBtn.addEventListener("click", renderBookings);
-
-      wireActions();
-      renderBookings();
-    });
+    const ySpan = document.getElementById("yearSpan");
+    if (ySpan) ySpan.textContent = new Date().getFullYear();
   </script>
 </body>
+
 </html>

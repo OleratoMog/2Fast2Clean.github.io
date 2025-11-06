@@ -32,43 +32,43 @@
       </p>
 
      <!-- Booking form box -->
+<!-- BOOKING FORM (booking.html) -->
 <div class="booking-form">
-  <h3>Confirm your booking</h3>
-
-  <label for="name">Full Name</label>
-  <input id="name" type="text" placeholder="e.g. Thabo Mokoena">
-
-  <label for="phone">Phone (+27…)</label>
-  <input id="phone" type="tel" placeholder="+27…">
-
-  <label for="email">Email (optional)</label>
-  <input id="email" type="email" placeholder="you@example.com">
-
-  <label for="day">Date</label>
-  <input id="day" type="date">
-
-  <label for="time">Time</label>
-  <input id="time" type="time">
+  <h3>Book your wash</h3>
 
   <label for="service">Service</label>
   <select id="service">
     <option value="">Select a package</option>
-    <option value="express">Express Wash — R80</option>
-    <option value="standard">Standard Wash — R120</option>
-    <option value="premium">Premium Detail — R250</option>
+    <option value="express">Express Wash – R80</option>
+    <option value="standard">Standard Wash – R120</option>
+    <option value="premium">Premium Detail – R250</option>
   </select>
 
-  <!-- THIS is the important button -->
-  <button
-    id="confirmPayBtn"
-    class="btnn wide"
-    type="button"
-  >
-    Confirm &amp; Pay
-  </button>
+  <label for="date">Date</label>
+  <input type="date" id="date">
 
+  <label for="time">Time</label>
+  <input type="time" id="time">
+
+  <label for="name">Full name</label>
+  <input type="text" id="name" placeholder="e.g. Thabo Mokoena">
+
+  <label for="email">Email (optional)</label>
+  <input type="email" id="email" placeholder="you@example.com">
+
+  <label for="phone">Phone (+27…)</label>
+  <input type="tel" id="phone" placeholder="+27…">
+
+  <!-- 🔹 NEW: SAVE BOOKING BUTTON -->
+  <button class="btnn wide" id="saveBookingBtn">Save booking</button>
+
+  <!-- 🔹 CONFIRM & PAY BUTTON -->
+  <button class="btnn wide" id="confirmPayBtn">Confirm &amp; Pay</button>
+
+  <!-- message area -->
   <p id="bookingMessage" class="booking-message"></p>
 </div>
+
 
     </div>
   </div>
