@@ -13,15 +13,17 @@
         <h2 class="logo">2Fast2Clean</h2>
       </div>
 
-      <div class="menu">
-        <ul>
-          <li><a href="index.html">HOME</a></li>
-          <li><a href="services.html">SERVICES</a></li>
-          <li><a href="booking.html">BOOK</a></li>
-          <li><a href="admin.html">ADMIN</a></li>
-          <li><a href="about.html">ABOUT</a></li>
-        </ul>
-      </div>
+     <div class="menu">
+  <ul>
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="services.html">SERVICES</a></li>
+    <li><a href="booking.html">BOOK</a></li>
+    <li><a href="admin.html">ADMIN</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+<li><a href="#" id="logoutLink" style="display:none;">LOGOUT</a></li>
+  </ul>
+</div>
+
 
       <div class="search">
         <input class="srch" placeholder="Type To Text">
@@ -37,70 +39,54 @@
           and when their slot is scheduled.
         </p>
 
-        <!-- ADMIN LOGIN BOX -->
-        <div class="form" id="adminLoginBox">
-          <h2>Admin Login</h2>
-
-          <input
-            type="email"
-            id="adminEmail"
-            placeholder="Admin email"
-          >
-
-          <input
-            type="password"
-            id="adminPassword"
-            placeholder="Admin password"
-          >
-
-          <button class="btnn" id="adminLoginBtn">Login</button>
-
-          <p class="link">
-            Use: <strong>admin@2fast2clean.co.za</strong> / <strong>admin123</strong>
-          </p>
-
-          <p id="adminMessage" class="booking-message"></p>
-        </div>
 
         <!-- BOOKINGS TABLE (HIDDEN UNTIL ADMIN LOGS IN) -->
-        <div id="adminTableSection" style="display:none; margin-top:24px;">
-          <h2 class="section-title" style="text-align:left; margin-bottom:12px;">
-            All bookings
-          </h2>
-          <p class="section-subtitle" style="text-align:left;">
-            Below you can see who booked what, for which day and time, along with
-            current status and payment method.
-          </p>
+     <div id="adminTableSection" style="display:none; margin-top:24px;">
+  <h2 class="section-title" style="text-align:left; margin-bottom:12px;">
+    All bookings
+  </h2>
+  <p class="section-subtitle" style="text-align:left;">
+    Below you can see who booked what, for which day and time, along with
+    current status and payment method.
+  </p>
 
-          <div class="booking-form">
-            <div style="overflow-x:auto;">
-              <table style="width:100%; border-collapse:collapse; font-size:13px;">
-                <thead>
-                  <tr>
-                    <th style="text-align:left; padding:8px;">ID</th>
-                    <th style="text-align:left; padding:8px;">Customer</th>
-                    <th style="text-align:left; padding:8px;">Email</th>
-                    <th style="text-align:left; padding:8px;">Phone</th>
-                    <th style="text-align:left; padding:8px;">Service</th>
-                    <th style="text-align:left; padding:8px;">Date</th>
-                    <th style="text-align:left; padding:8px;">Time</th>
-                    <th style="text-align:left; padding:8px;">Status</th>
-                    <th style="text-align:left; padding:8px;">Payment</th>
-                  </tr>
-                </thead>
-                <tbody id="bookingsTableBody">
-                  <!-- rows injected by app.js -->
-                </tbody>
-              </table>
-            </div>
-            <p class="note small">
-              Bookings are stored in this browser’s local storage for demo purposes.
-              In a production system this would come from a database / API.
-            </p>
-          </div>
-        </div>
-      </div>
+  <!-- Export button -->
+  <div style="text-align:right; margin-bottom:12px;">
+    <button id="exportPdfBtn" class="btnn">
+      Export bookings as PDF
+    </button>
+  </div>
+
+  <div class="booking-form">
+    <div style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse; font-size:13px;">
+        <thead>
+          <tr>
+            <th style="text-align:left; padding:8px;">ID</th>
+            <th style="text-align:left; padding:8px;">Customer</th>
+            <th style="text-align:left; padding:8px;">Email</th>
+            <th style="text-align:left; padding:8px;">Phone</th>
+            <th style="text-align:left; padding:8px;">Service</th>
+            <th style="text-align:left; padding:8px;">Date</th>
+            <th style="text-align:left; padding:8px;">Time</th>
+            <th style="text-align:left; padding:8px;">Status</th>
+            <th style="text-align:left; padding:8px;">Payment</th>
+            <th style="text-align:left; padding:8px;">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="bookingsTableBody">
+          <!-- rows injected by app.js -->
+        </tbody>
+      </table>
     </div>
+    <p class="note small">
+      Bookings are stored in this browser’s local storage for demo purposes.
+      In a production system this would come from a database / API.
+    </p>
+  </div>
+</div>
+
+
 
     <div class="footer">
       © <span id="yearSpan"></span> 2Fast2Clean • Pretoria / Centurion
