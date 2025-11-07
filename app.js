@@ -866,11 +866,82 @@ function initAdminPage() {
   showDashboard();
 
   // Export bookings as PDF (browser print → choose "Save as PDF")
-  if (exportBtn) {
-    exportBtn.addEventListener("click", () => {
-      window.print();
-    });
-  }
+ if (exportBtn) {
+  exportBtn.addEventListener("click", () => {
+    const rows = Array.from(tbody.querySelectorAll("tr"));
+
+    if (!rows.length) {
+      alert("No bookings to export.");
+      return;
+    }
+
+    // Build a simple HTML page containing ONLY the bookings table
+    const html = `
+      <html>
+      <head>
+        <title>2Fast2Clean – Bookings Export</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            padding: 16px;
+          }
+          h2 {
+            margin-bottom: 12px;
+          }
+          table {
+            width: 100%;
+            border-collapse: collapse;
+          }
+          th, td {
+            border: 1px solid #ccc;
+            padding: 6px 8px;
+            font-size: 12px;
+          }
+          th {
+            background: #f3f4f6;
+            text-align: left;
+          }
+        </style>
+      </head>
+      <body>
+        <h2>2Fast2Clean – Bookings Export</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Customer</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Service</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Status</th>
+              <th>Payment</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows.map(r => `<tr>${r.innerHTML}</tr>`).join("")}
+          </tbody>
+        </table>
+      </body>
+      </html>
+    `;
+
+    const printWin = window.open("", "_blank");
+    if (!printWin) {
+      alert("Popup blocked – please allow popups for this site to export.");
+      return;
+    }
+
+    printWin.document.open();
+    printWin.document.write(html);
+    printWin.document.close();
+    printWin.focus();
+    printWin.print();
+  });
+}
+
 
   // Delete booking
   tbody.addEventListener("click", (e) => {
